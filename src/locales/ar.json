@@ -1,0 +1,247 @@
+{
+  "common": {
+    "appName": "جامعة المعرفة",
+    "ok": "موافق",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "done": "تم",
+    "search": "بحث",
+    "seeAll": "عرض الكل",
+    "today": "اليوم",
+    "tomorrow": "غدًا",
+    "loading": "جارٍ التحميل…",
+    "retry": "إعادة المحاولة",
+    "empty": "لا يوجد شيء هنا بعد",
+    "comingSoon": "قريبًا",
+    "back": "رجوع",
+    "send": "إرسال",
+    "submit": "إرسال",
+    "close": "إغلاق",
+    "open": "فتح",
+    "viewAll": "عرض الكل",
+    "new": "جديد",
+    "all": "الكل"
+  },
+  "roles": {
+    "student": "طالب",
+    "teacher": "عضو هيئة تدريس",
+    "advisor": "المرشد الأكاديمي",
+    "student_affairs": "شؤون الطلاب",
+    "vendor": "بائع",
+    "admin": "مسؤول"
+  },
+  "auth": {
+    "welcome": "مرحبًا",
+    "subtitle": "سجّل الدخول بحساب الجامعة",
+    "universityId": "الرقم الجامعي",
+    "idPlaceholder": "مثال: 4210234 أو name@um.edu.sa",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "كلمة مرور البوابة",
+    "signIn": "تسجيل الدخول",
+    "signingIn": "جارٍ تسجيل الدخول…",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "ssoNote": "تسجّل الدخول بنفس الرقم وكلمة المرور المستخدمة في البوابة. لا تشارك الجامعة كلمة مرورك مع هذا التطبيق.",
+    "demoTitle": "حسابات تجريبية",
+    "demoNote": "اختر دورًا لاستكشاف التطبيق ببيانات تجريبية.",
+    "error": "الرقم الجامعي أو كلمة المرور غير صحيحة. حاول مرة أخرى.",
+    "continueAs": "استكشف كـ {{role}}"
+  },
+  "tabs": {
+    "home": "الرئيسية",
+    "calendar": "التقويم",
+    "mail": "البريد",
+    "services": "الخدمات",
+    "more": "المزيد"
+  },
+  "home": {
+    "greetingMorning": "صباح الخير",
+    "greetingAfternoon": "مساء الخير",
+    "greetingEvening": "مساء الخير",
+    "todaySchedule": "جدول اليوم",
+    "noClassesToday": "لا توجد محاضرات اليوم",
+    "noDutyToday": "لا توجد مراقبة اليوم",
+    "remindersDue": "التذكيرات",
+    "upcomingEvents": "الفعاليات القادمة",
+    "quickLinks": "روابط سريعة",
+    "nextShuttle": "الباص القادم",
+    "latestNotices": "آخر الإشعارات",
+    "openPortal": "البوابة",
+    "openMoodle": "مودل",
+    "digitalId": "بطاقتي",
+    "more": "خدمات أخرى"
+  },
+  "services": {
+    "academic": "الأكاديمية",
+    "campus": "الحياة الجامعية",
+    "support": "الدعم",
+    "headerSubtitle": "كل خدمات المعرفة في مكان واحد"
+  },
+  "sections": {
+    "reminders": { "title": "التذكيرات", "subtitle": "المهام والمواعيد" },
+    "mail": { "title": "البريد", "subtitle": "صندوق الجامعة" },
+    "calendar": { "title": "التقويم", "subtitle": "المحاضرات والجدول" },
+    "shuttle": { "title": "خدمة الباصات", "subtitle": "المسارات والأوقات" },
+    "food": { "title": "خدمات الطعام", "subtitle": "المقاهي والمطاعم" },
+    "research": { "title": "البحث العلمي", "subtitle": "الأبحاث والفرص" },
+    "events": { "title": "الفعاليات", "subtitle": "ما يحدث في الحرم" },
+    "excuses": { "title": "الأعذار", "subtitle": "تقديم التقارير الطبية والغياب" },
+    "invigilation": { "title": "المراقبة", "subtitle": "مهام الاختبارات" },
+    "notices": { "title": "إشعارات الإرشاد", "subtitle": "مراسلة الطلاب المرشدين" },
+    "messages": { "title": "الرسائل", "subtitle": "محادثات الطلاب والأعضاء" },
+    "id": { "title": "البطاقة الرقمية", "subtitle": "بطاقتك الجامعية" },
+    "directory": { "title": "الدليل", "subtitle": "الأشخاص والأقسام" },
+    "news": { "title": "الأخبار", "subtitle": "إعلانات الجامعة" },
+    "emergency": { "title": "السلامة والطوارئ", "subtitle": "الأمن والعيادة" },
+    "map": { "title": "خريطة الحرم", "subtitle": "اعثر على طريقك" },
+    "grades": { "title": "الدرجات", "subtitle": "النتائج والمعدل" },
+    "library": { "title": "المكتبة", "subtitle": "الفهرس والأوقات" },
+    "prayer": { "title": "أوقات الصلاة", "subtitle": "اليوم في الحرم" },
+    "portal": { "title": "البوابة", "subtitle": "portal.um.edu.sa" },
+    "moodle": { "title": "مودل (التعلّم)", "subtitle": "lms.um.edu.sa" },
+    "settings": { "title": "الإعدادات", "subtitle": "اللغة والتفضيلات" },
+    "excuseReview": { "title": "طلبات الأعذار", "subtitle": "مراجعة طلبات الطلاب" }
+  },
+  "calendar": {
+    "week": "أسبوع",
+    "agenda": "جدول",
+    "classes": "المحاضرات",
+    "duties": "المراقبة",
+    "room": "القاعة",
+    "instructor": "المحاضر",
+    "noItems": "لا يوجد مواعيد"
+  },
+  "reminders": {
+    "add": "إضافة تذكير",
+    "due": "يستحق {{when}}",
+    "markDone": "تحديد كمنجز",
+    "completed": "منجزة",
+    "active": "نشطة",
+    "empty": "لا توجد مهام متبقية"
+  },
+  "mail": {
+    "inbox": "الوارد",
+    "unread": "{{count}} غير مقروءة",
+    "openWebmail": "فتح البريد الكامل",
+    "empty": "صندوق الوارد فارغ"
+  },
+  "events": {
+    "rsvp": "تسجيل الحضور",
+    "going": "سأحضر",
+    "register": "تسجيل",
+    "categoryAll": "الكل",
+    "when": "الوقت",
+    "where": "المكان"
+  },
+  "shuttle": {
+    "routes": "المسارات",
+    "nextDepartures": "المغادرات القادمة",
+    "from": "من",
+    "to": "إلى",
+    "everyMinutes": "كل {{minutes}} دقيقة",
+    "live": "مباشر"
+  },
+  "food": {
+    "openNow": "مفتوح الآن",
+    "closed": "مغلق",
+    "menu": "القائمة",
+    "addItem": "إضافة صنف",
+    "manageMenu": "إدارة القائمة",
+    "price": "{{price}} ريال",
+    "categories": "الأصناف",
+    "available": "متوفر",
+    "unavailable": "نفد"
+  },
+  "research": {
+    "publications": "الأبحاث المنشورة",
+    "opportunities": "الفرص",
+    "grants": "المنح",
+    "readMore": "اقرأ المزيد"
+  },
+  "excuses": {
+    "new": "عذر جديد",
+    "type": "النوع",
+    "typeSick": "مرضي / طبي",
+    "typeBereavement": "حالة وفاة",
+    "typeOfficial": "تكليف رسمي",
+    "typeOther": "أخرى",
+    "dateRange": "تواريخ الغياب",
+    "note": "ملاحظات",
+    "notePlaceholder": "صف سبب الغياب باختصار…",
+    "attach": "إرفاق مستند",
+    "attached": "تم إرفاق المستند",
+    "statusPending": "قيد المراجعة",
+    "statusApproved": "مقبول",
+    "statusRejected": "مرفوض",
+    "submitted": "أُرسل إلى شؤون الطلاب",
+    "myRequests": "طلباتي",
+    "approve": "قبول",
+    "reject": "رفض",
+    "student": "الطالب",
+    "submittedOn": "أُرسل في {{date}}"
+  },
+  "invigilation": {
+    "exam": "الاختبار",
+    "room": "القاعة",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "role": "الدور",
+    "chief": "رئيس لجنة",
+    "assistant": "مساعد",
+    "empty": "لا توجد مهام مراقبة"
+  },
+  "notices": {
+    "advisees": "طلابي المرشدون",
+    "sendNotice": "إرسال إشعار",
+    "to": "إلى",
+    "message": "الرسالة",
+    "messagePlaceholder": "اكتب رسالة إلى الطالب…",
+    "sent": "تم إرسال الإشعار",
+    "history": "الإشعارات المرسلة"
+  },
+  "messages": {
+    "newMessage": "رسالة جديدة",
+    "typeMessage": "اكتب رسالة…",
+    "noConversations": "لا توجد محادثات بعد",
+    "students": "الطلاب",
+    "faculty": "أعضاء التدريس"
+  },
+  "id": {
+    "tapToZoom": "اعرضها عند البوابة أو ماسح المكتبة",
+    "studentId": "الرقم الجامعي",
+    "program": "البرنامج",
+    "validThru": "صالحة حتى",
+    "campus": "حرم الدرعية"
+  },
+  "directory": {
+    "searchPeople": "ابحث عن شخص أو قسم",
+    "call": "اتصال",
+    "email": "بريد",
+    "message": "رسالة",
+    "office": "المكتب"
+  },
+  "emergency": {
+    "callSecurity": "أمن الحرم",
+    "callClinic": "العيادة الطبية",
+    "callAmbulance": "الإسعاف (997)",
+    "sos": "نداء استغاثة",
+    "sosNote": "يتصل بأمن الحرم مع موقعك",
+    "tip": "احفظ هذه الأرقام دون اتصال"
+  },
+  "settings": {
+    "language": "اللغة",
+    "english": "English",
+    "arabic": "العربية",
+    "theme": "المظهر",
+    "notifications": "الإشعارات",
+    "account": "الحساب",
+    "about": "حول",
+    "logout": "تسجيل الخروج",
+    "rtlNote": "سيتحول التطبيق إلى التخطيط من اليمين إلى اليسار.",
+    "version": "الإصدار"
+  },
+  "webview": {
+    "openInBrowser": "فتح في المتصفح",
+    "secureNote": "أنت تسجّل الدخول على صفحة الجامعة الآمنة الرسمية.",
+    "loadError": "تعذّر تحميل الصفحة. تحقق من اتصالك."
+  }
+}

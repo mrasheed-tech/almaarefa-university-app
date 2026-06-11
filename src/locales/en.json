@@ -1,0 +1,247 @@
+{
+  "common": {
+    "appName": "Almaarefa University",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "save": "Save",
+    "done": "Done",
+    "search": "Search",
+    "seeAll": "See all",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "loading": "Loading…",
+    "retry": "Retry",
+    "empty": "Nothing here yet",
+    "comingSoon": "Coming soon",
+    "back": "Back",
+    "send": "Send",
+    "submit": "Submit",
+    "close": "Close",
+    "open": "Open",
+    "viewAll": "View all",
+    "new": "New",
+    "all": "All"
+  },
+  "roles": {
+    "student": "Student",
+    "teacher": "Faculty",
+    "advisor": "Academic Advisor",
+    "student_affairs": "Student Affairs",
+    "vendor": "Vendor",
+    "admin": "Administrator"
+  },
+  "auth": {
+    "welcome": "Welcome",
+    "subtitle": "Sign in with your university account",
+    "universityId": "University ID",
+    "idPlaceholder": "e.g. 4210234 or name@um.edu.sa",
+    "password": "Password",
+    "passwordPlaceholder": "Your Portal password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "forgotPassword": "Forgot password?",
+    "ssoNote": "You sign in with the same ID and password you use for the Portal. Almaarefa never shares your password with this app.",
+    "demoTitle": "Demo accounts",
+    "demoNote": "Pick a role to explore the app with sample data.",
+    "error": "Incorrect ID or password. Please try again.",
+    "continueAs": "Explore as {{role}}"
+  },
+  "tabs": {
+    "home": "Home",
+    "calendar": "Calendar",
+    "mail": "Mail",
+    "services": "Services",
+    "more": "More"
+  },
+  "home": {
+    "greetingMorning": "Good morning",
+    "greetingAfternoon": "Good afternoon",
+    "greetingEvening": "Good evening",
+    "todaySchedule": "Today's schedule",
+    "noClassesToday": "No classes scheduled today",
+    "noDutyToday": "No invigilation duty today",
+    "remindersDue": "Reminders",
+    "upcomingEvents": "Upcoming events",
+    "quickLinks": "Quick links",
+    "nextShuttle": "Next shuttle",
+    "latestNotices": "Latest notices",
+    "openPortal": "Portal",
+    "openMoodle": "Moodle",
+    "digitalId": "My ID",
+    "more": "More services"
+  },
+  "services": {
+    "academic": "Academic",
+    "campus": "Campus life",
+    "support": "Support",
+    "headerSubtitle": "Everything Almaarefa, in one place"
+  },
+  "sections": {
+    "reminders": { "title": "Reminders", "subtitle": "Tasks & deadlines" },
+    "mail": { "title": "Mail", "subtitle": "University inbox" },
+    "calendar": { "title": "Calendar", "subtitle": "Classes & schedule" },
+    "shuttle": { "title": "Shuttle Service", "subtitle": "Routes & times" },
+    "food": { "title": "Food Services", "subtitle": "Cafes & restaurants" },
+    "research": { "title": "Research", "subtitle": "Publications & opportunities" },
+    "events": { "title": "Events", "subtitle": "What's on campus" },
+    "excuses": { "title": "Excuses", "subtitle": "Submit sick notes & absences" },
+    "invigilation": { "title": "Invigilation", "subtitle": "Your exam duties" },
+    "notices": { "title": "Advisee Notices", "subtitle": "Message your advisees" },
+    "messages": { "title": "Messages", "subtitle": "Chats with faculty & students" },
+    "id": { "title": "Digital ID", "subtitle": "Your campus card" },
+    "directory": { "title": "Directory", "subtitle": "People & departments" },
+    "news": { "title": "News", "subtitle": "University announcements" },
+    "emergency": { "title": "Safety & Emergency", "subtitle": "Security & clinic" },
+    "map": { "title": "Campus Map", "subtitle": "Find your way" },
+    "grades": { "title": "Grades", "subtitle": "Results & GPA" },
+    "library": { "title": "Library", "subtitle": "Catalog & hours" },
+    "prayer": { "title": "Prayer Times", "subtitle": "Today on campus" },
+    "portal": { "title": "Portal", "subtitle": "portal.um.edu.sa" },
+    "moodle": { "title": "Moodle (LMS)", "subtitle": "lms.um.edu.sa" },
+    "settings": { "title": "Settings", "subtitle": "Language & preferences" },
+    "excuseReview": { "title": "Excuse Requests", "subtitle": "Review student submissions" }
+  },
+  "calendar": {
+    "week": "Week",
+    "agenda": "Agenda",
+    "classes": "Classes",
+    "duties": "Invigilation",
+    "room": "Room",
+    "instructor": "Instructor",
+    "noItems": "Nothing scheduled"
+  },
+  "reminders": {
+    "add": "Add reminder",
+    "due": "Due {{when}}",
+    "markDone": "Mark done",
+    "completed": "Completed",
+    "active": "Active",
+    "empty": "You're all caught up"
+  },
+  "mail": {
+    "inbox": "Inbox",
+    "unread": "{{count}} unread",
+    "openWebmail": "Open full webmail",
+    "empty": "Your inbox is empty"
+  },
+  "events": {
+    "rsvp": "RSVP",
+    "going": "Going",
+    "register": "Register",
+    "categoryAll": "All",
+    "when": "When",
+    "where": "Where"
+  },
+  "shuttle": {
+    "routes": "Routes",
+    "nextDepartures": "Next departures",
+    "from": "From",
+    "to": "To",
+    "everyMinutes": "Every {{minutes}} min",
+    "live": "Live"
+  },
+  "food": {
+    "openNow": "Open now",
+    "closed": "Closed",
+    "menu": "Menu",
+    "addItem": "Add menu item",
+    "manageMenu": "Manage menu",
+    "price": "SAR {{price}}",
+    "categories": "Categories",
+    "available": "Available",
+    "unavailable": "Sold out"
+  },
+  "research": {
+    "publications": "Publications",
+    "opportunities": "Opportunities",
+    "grants": "Grants",
+    "readMore": "Read more"
+  },
+  "excuses": {
+    "new": "New excuse",
+    "type": "Type",
+    "typeSick": "Sick / Medical",
+    "typeBereavement": "Bereavement",
+    "typeOfficial": "Official assignment",
+    "typeOther": "Other",
+    "dateRange": "Absence dates",
+    "note": "Notes",
+    "notePlaceholder": "Briefly describe your absence…",
+    "attach": "Attach document",
+    "attached": "Document attached",
+    "statusPending": "Under review",
+    "statusApproved": "Approved",
+    "statusRejected": "Rejected",
+    "submitted": "Submitted to Student Affairs",
+    "myRequests": "My requests",
+    "approve": "Approve",
+    "reject": "Reject",
+    "student": "Student",
+    "submittedOn": "Submitted {{date}}"
+  },
+  "invigilation": {
+    "exam": "Exam",
+    "room": "Room",
+    "date": "Date",
+    "time": "Time",
+    "role": "Role",
+    "chief": "Chief invigilator",
+    "assistant": "Assistant",
+    "empty": "No invigilation duties assigned"
+  },
+  "notices": {
+    "advisees": "My advisees",
+    "sendNotice": "Send notice",
+    "to": "To",
+    "message": "Message",
+    "messagePlaceholder": "Write a message to your advisee…",
+    "sent": "Notice sent",
+    "history": "Sent notices"
+  },
+  "messages": {
+    "newMessage": "New message",
+    "typeMessage": "Type a message…",
+    "noConversations": "No conversations yet",
+    "students": "Students",
+    "faculty": "Faculty"
+  },
+  "id": {
+    "tapToZoom": "Show at the gate or library scanner",
+    "studentId": "ID Number",
+    "program": "Program",
+    "validThru": "Valid through",
+    "campus": "Diriyah Campus"
+  },
+  "directory": {
+    "searchPeople": "Search people or departments",
+    "call": "Call",
+    "email": "Email",
+    "message": "Message",
+    "office": "Office"
+  },
+  "emergency": {
+    "callSecurity": "Campus Security",
+    "callClinic": "Medical Clinic",
+    "callAmbulance": "Ambulance (997)",
+    "sos": "Emergency SOS",
+    "sosNote": "Calls campus security with your location",
+    "tip": "Save these numbers offline"
+  },
+  "settings": {
+    "language": "Language",
+    "english": "English",
+    "arabic": "العربية",
+    "theme": "Appearance",
+    "notifications": "Notifications",
+    "account": "Account",
+    "about": "About",
+    "logout": "Sign out",
+    "rtlNote": "The app will switch to right-to-left layout.",
+    "version": "Version"
+  },
+  "webview": {
+    "openInBrowser": "Open in browser",
+    "secureNote": "You're signing in on the university's own secure page.",
+    "loadError": "Couldn't load the page. Check your connection."
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "local"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview",
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "EXPO_PUBLIC_SUPABASE_URL": "https://mkpvhnpobhfjhtotcktb.supabase.co",
+        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_N6lV07f9Ibw6yFe7IEd08w_t4-Z8dP9",
+        "EXPO_PUBLIC_PORTAL_URL": "https://portal.um.edu.sa",
+        "EXPO_PUBLIC_MOODLE_URL": "https://lms.um.edu.sa",
+        "EXPO_PUBLIC_WEBMAIL_URL": "https://outlook.office.com/mail/"
+      }
+    },
+    "production": {
+      "channel": "production",
+      "autoIncrement": true,
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "env": {
+        "EXPO_PUBLIC_SUPABASE_URL": "https://mkpvhnpobhfjhtotcktb.supabase.co",
+        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_N6lV07f9Ibw6yFe7IEd08w_t4-Z8dP9",
+        "EXPO_PUBLIC_PORTAL_URL": "https://portal.um.edu.sa",
+        "EXPO_PUBLIC_MOODLE_URL": "https://lms.um.edu.sa",
+        "EXPO_PUBLIC_WEBMAIL_URL": "https://outlook.office.com/mail/"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
