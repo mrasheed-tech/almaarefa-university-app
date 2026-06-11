@@ -34,7 +34,9 @@ export default function Shuttle() {
                     <Text weight="bold" style={{ flex: 1 }}>
                       {pick(r.nameEn, r.nameAr)}
                     </Text>
-                    <Badge label={t('shuttle.everyMinutes', { minutes: r.everyMinutes })} tone="neutral" />
+                    {r.everyMinutes > 0 ? (
+                      <Badge label={t('shuttle.everyMinutes', { minutes: r.everyMinutes })} tone="neutral" />
+                    ) : null}
                   </View>
 
                   <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', alignItems: 'center', gap: 6, marginTop: 6 }}>

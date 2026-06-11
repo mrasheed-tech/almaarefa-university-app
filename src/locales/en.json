@@ -103,6 +103,7 @@
   },
   "calendar": {
     "week": "Week",
+    "day": "Day",
     "agenda": "Agenda",
     "classes": "Classes",
     "duties": "Invigilation",
@@ -116,6 +117,7 @@
     "markDone": "Mark done",
     "completed": "Completed",
     "active": "Active",
+    "setTime": "Set date & time",
     "empty": "You're all caught up"
   },
   "mail": {
@@ -149,7 +151,24 @@
     "price": "SAR {{price}}",
     "categories": "Categories",
     "available": "Available",
-    "unavailable": "Sold out"
+    "unavailable": "Sold out",
+    "order": "Order",
+    "checkout": "Checkout",
+    "deliverTo": "Deliver to",
+    "placeOrder": "Place order",
+    "orderPlaced": "Order placed!",
+    "myOrders": "My Orders",
+    "incomingOrders": "Incoming orders",
+    "total": "Total",
+    "noOrders": "No orders yet",
+    "items": "{{count}} items",
+    "statusPlaced": "Placed",
+    "statusPreparing": "Preparing",
+    "statusReady": "Ready",
+    "statusDelivered": "Delivered",
+    "markPreparing": "Start preparing",
+    "markReady": "Mark ready",
+    "markDelivered": "Mark delivered"
   },
   "research": {
     "publications": "Publications",

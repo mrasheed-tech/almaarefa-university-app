@@ -78,6 +78,7 @@ export interface ShuttleRoute {
 
 export interface FoodVendor {
   id: string;
+  ownerId?: string | null;
   nameEn: string;
   nameAr: string;
   cuisineEn: string;
@@ -204,4 +205,30 @@ export interface GradeRow {
   credits: number;
   grade: string;
   points: number;
+}
+
+export interface OrderItem {
+  menuItemId: string;
+  nameEn: string;
+  nameAr: string;
+  price: number;
+  qty: number;
+  emoji?: string;
+}
+
+export type OrderStatus = 'placed' | 'preparing' | 'ready' | 'delivered' | 'cancelled';
+
+export interface FoodOrder {
+  id: string;
+  userId: string;
+  vendorId: string;
+  vendorNameEn: string;
+  vendorNameAr: string;
+  customerNameEn?: string;
+  customerNameAr?: string;
+  deliverTo: string;
+  items: OrderItem[];
+  total: number;
+  status: OrderStatus;
+  createdAt: string;
 }

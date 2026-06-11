@@ -103,6 +103,7 @@
   },
   "calendar": {
     "week": "أسبوع",
+    "day": "يوم",
     "agenda": "جدول",
     "classes": "المحاضرات",
     "duties": "المراقبة",
@@ -116,6 +117,7 @@
     "markDone": "تحديد كمنجز",
     "completed": "منجزة",
     "active": "نشطة",
+    "setTime": "تعيين التاريخ والوقت",
     "empty": "لا توجد مهام متبقية"
   },
   "mail": {
@@ -149,7 +151,24 @@
     "price": "{{price}} ريال",
     "categories": "الأصناف",
     "available": "متوفر",
-    "unavailable": "نفد"
+    "unavailable": "نفد",
+    "order": "اطلب",
+    "checkout": "إتمام الطلب",
+    "deliverTo": "التوصيل إلى",
+    "placeOrder": "تأكيد الطلب",
+    "orderPlaced": "تم تقديم الطلب!",
+    "myOrders": "طلباتي",
+    "incomingOrders": "الطلبات الواردة",
+    "total": "الإجمالي",
+    "noOrders": "لا توجد طلبات بعد",
+    "items": "{{count}} أصناف",
+    "statusPlaced": "تم الطلب",
+    "statusPreparing": "قيد التحضير",
+    "statusReady": "جاهز",
+    "statusDelivered": "تم التوصيل",
+    "markPreparing": "بدء التحضير",
+    "markReady": "تحديد كجاهز",
+    "markDelivered": "تحديد كمُسلَّم"
   },
   "research": {
     "publications": "الأبحاث المنشورة",

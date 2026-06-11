@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Badge, Card, Header, Screen, Text } from '@/components';
@@ -15,7 +15,16 @@ export default function FoodList() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header back title={t('sections.food.title')} subtitle={t('sections.food.subtitle')} />
+      <Header
+        back
+        title={t('sections.food.title')}
+        subtitle={t('sections.food.subtitle')}
+        right={
+          <Pressable onPress={() => router.push('/section/orders')} hitSlop={10}>
+            <Ionicons name="receipt-outline" size={22} color="#fff" />
+          </Pressable>
+        }
+      />
       <Screen scroll>
         <View style={{ gap: spacing.md }}>
           {vendors.map((v) => {

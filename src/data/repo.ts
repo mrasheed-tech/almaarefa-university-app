@@ -10,12 +10,15 @@ import type {
   Conversation,
   DirectoryEntry,
   Excuse,
+  FoodOrder,
   FoodVendor,
   GradeRow,
   Invigilation,
   MailMessage,
   MenuItem,
   Notice,
+  OrderItem,
+  OrderStatus,
   Reminder,
   ResearchItem,
   Role,
@@ -88,6 +91,7 @@ const mapShuttle = (r: any): ShuttleRoute => ({
 
 const mapVendor = (r: any): FoodVendor => ({
   id: r.id,
+  ownerId: r.owner_id ?? null,
   nameEn: s(r.name_en),
   nameAr: s(r.name_ar),
   cuisineEn: s(r.cuisine_en),
@@ -273,12 +277,17 @@ export async function loadAllData(uid: string): Promise<Partial<DataState>> {
 }
 
 /* ------------------------------- writers ------------------------------- */
-export async function addReminder(uid: string, title: string): Promise<Reminder | null> {
-  const due = new Date();
-  due.setDate(due.getDate() + 1);
+export async function addReminder(uid: string, title: string, dueAtISO?: string): Promise<Reminder | null> {
+  let due = dueAtISO;
+  if (!due) {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    d.setHours(9, 0, 0, 0);
+    due = d.toISOString();
+  }
   const { data } = await supabase
     .from('reminders')
-    .insert({ user_id: uid, title, due_at: due.toISOString(), kind: 'personal' })
+    .insert({ user_id: uid, title, due_at: due, kind: 'personal' })
     .select()
     .single();
   return data ? mapReminder(data) : null;
@@ -286,6 +295,10 @@ export async function addReminder(uid: string, title: string): Promise<Reminder 
 
 export async function setReminderDone(id: string, done: boolean): Promise<void> {
   await supabase.from('reminders').update({ done }).eq('id', id);
+}
+
+export async function deleteReminder(id: string): Promise<void> {
+  await supabase.from('reminders').delete().eq('id', id);
 }
 
 export async function setRsvp(uid: string, eventId: string, going: boolean): Promise<void> {
@@ -434,6 +447,73 @@ export async function sendNotice(advisorId: string, studentId: string, body: str
 
 export async function markMailRead(id: string): Promise<void> {
   await supabase.from('mailbox').update({ unread: false }).eq('id', id);
+}
+
+/* ------------------------------ food orders ------------------------------ */
+export const DELIVERY_LOCATIONS: { id: string; en: string; ar: string }[] = [
+  { id: 'main_lobby', en: 'Main Lobby', ar: 'البهو الرئيسي' },
+  { id: 'bf_hallway', en: 'BF Hallway', ar: 'ممر BF' },
+  { id: 'bg_hallway', en: 'BG Hallway', ar: 'ممر BG' },
+  { id: 'af_hallway', en: 'AF Hallway', ar: 'ممر AF' },
+  { id: 'ag_hallway', en: 'AG Hallway', ar: 'ممر AG' },
+  { id: 'library', en: 'Library', ar: 'المكتبة' },
+];
+
+export function deliveryLabel(id: string, lang: 'en' | 'ar'): string {
+  const loc = DELIVERY_LOCATIONS.find((l) => l.id === id);
+  return loc ? (lang === 'ar' ? loc.ar : loc.en) : id;
+}
+
+const mapOrder = (r: any): FoodOrder => ({
+  id: r.id,
+  userId: r.user_id,
+  vendorId: r.vendor_id,
+  vendorNameEn: r.vendor?.name_en ?? '',
+  vendorNameAr: r.vendor?.name_ar ?? '',
+  customerNameEn: r.customer?.name_en,
+  customerNameAr: r.customer?.name_ar,
+  deliverTo: r.deliver_to,
+  items: Array.isArray(r.items) ? (r.items as OrderItem[]) : [],
+  total: Number(r.total ?? 0),
+  status: (r.status ?? 'placed') as OrderStatus,
+  createdAt: r.created_at,
+});
+
+export async function placeOrder(
+  uid: string,
+  vendorId: string,
+  items: OrderItem[],
+  deliverTo: string,
+  total: number,
+): Promise<FoodOrder | null> {
+  const { data } = await (supabase as any)
+    .from('food_orders')
+    .insert({ user_id: uid, vendor_id: vendorId, deliver_to: deliverTo, items: items as any, total })
+    .select('*, vendor:food_vendors(name_en,name_ar)')
+    .single();
+  return data ? mapOrder(data) : null;
+}
+
+export async function fetchMyOrders(uid: string): Promise<FoodOrder[]> {
+  const { data } = await (supabase as any)
+    .from('food_orders')
+    .select('*, vendor:food_vendors(name_en,name_ar)')
+    .eq('user_id', uid)
+    .order('created_at', { ascending: false });
+  return (data ?? []).map(mapOrder);
+}
+
+export async function fetchVendorOrders(vendorId: string): Promise<FoodOrder[]> {
+  const { data } = await (supabase as any)
+    .from('food_orders')
+    .select('*, customer:profiles!food_orders_user_id_fkey(name_en,name_ar)')
+    .eq('vendor_id', vendorId)
+    .order('created_at', { ascending: false });
+  return (data ?? []).map(mapOrder);
+}
+
+export async function updateOrderStatus(id: string, status: OrderStatus): Promise<void> {
+  await (supabase as any).from('food_orders').update({ status }).eq('id', id);
 }
 
 /** Convenience: update one slice of the store in place. */

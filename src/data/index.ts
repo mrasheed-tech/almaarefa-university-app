@@ -14,6 +14,7 @@ export * from './types';
 export {
   addReminder,
   setReminderDone,
+  deleteReminder,
   setRsvp,
   sendMessage,
   subscribeMessages,
@@ -29,6 +30,12 @@ export {
   startConversation,
   refreshConversations,
   listContactsFor,
+  placeOrder,
+  fetchMyOrders,
+  fetchVendorOrders,
+  updateOrderStatus,
+  DELIVERY_LOCATIONS,
+  deliveryLabel,
 } from './repo';
 export type { Contact } from './repo';
 export { useDataStore } from '@/lib/store';

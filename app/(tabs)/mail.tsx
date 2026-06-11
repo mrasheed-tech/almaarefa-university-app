@@ -20,6 +20,8 @@ export default function Mail() {
   return (
     <View style={{ flex: 1 }}>
       <Header
+        back
+        onBack={() => (router.canGoBack() ? router.back() : router.navigate('/(tabs)'))}
         title={t('tabs.mail')}
         subtitle={unreadCount > 0 ? t('mail.unread', { count: unreadCount }) : t('mail.inbox')}
         right={

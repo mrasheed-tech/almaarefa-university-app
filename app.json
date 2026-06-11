@@ -58,7 +58,8 @@
         {
           "photosPermission": "Allow Almaarefa to access your photos to upload menu item images."
         }
-      ]
+      ],
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
       "typedRoutes": false

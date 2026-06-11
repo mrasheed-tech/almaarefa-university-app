@@ -1,7 +1,41 @@
 import { Platform } from 'react-native';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from './supabase';
+
+const REMINDER_NOTIF_PREFIX = 'reminder.notif.';
+
+/** Schedule a local notification to fire at a reminder's due time. */
+export async function scheduleReminderNotification(reminderId: string, title: string, dueAtISO: string): Promise<void> {
+  try {
+    if (Platform.OS === 'web') return;
+    const date = new Date(dueAtISO);
+    if (isNaN(date.getTime()) || date.getTime() <= Date.now()) return; // only future times
+    await cancelReminderNotification(reminderId);
+    const notifId = await Notifications.scheduleNotificationAsync({
+      content: { title: 'Reminder', body: title, sound: 'default' },
+      trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date } as any,
+    });
+    await AsyncStorage.setItem(REMINDER_NOTIF_PREFIX + reminderId, notifId);
+  } catch (e) {
+    console.warn('[reminder] schedule failed:', (e as Error).message);
+  }
+}
+
+/** Cancel a previously scheduled reminder notification. */
+export async function cancelReminderNotification(reminderId: string): Promise<void> {
+  try {
+    const key = REMINDER_NOTIF_PREFIX + reminderId;
+    const notifId = await AsyncStorage.getItem(key);
+    if (notifId) {
+      await Notifications.cancelScheduledNotificationAsync(notifId);
+      await AsyncStorage.removeItem(key);
+    }
+  } catch {
+    // ignore
+  }
+}
 
 // How notifications behave when received while the app is foregrounded.
 Notifications.setNotificationHandler({
