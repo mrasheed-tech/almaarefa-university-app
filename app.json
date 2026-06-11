@@ -26,6 +26,7 @@
         "backgroundColor": "#00ADCA"
       },
       "permissions": [
+        "android.permission.RECORD_AUDIO",
         "android.permission.RECORD_AUDIO"
       ]
     },
@@ -70,6 +71,12 @@
         "projectId": "ad7e9167-046a-45c1-b740-3950998c02dc"
       }
     },
-    "owner": "mustafarasheed"
+    "owner": "mustafarasheed",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ad7e9167-046a-45c1-b740-3950998c02dc"
+    }
   }
 }
