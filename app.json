@@ -16,7 +16,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "sa.edu.um.app",
       "infoPlist": {
-        "CFBundleAllowMixedLocalizations": true
+        "CFBundleAllowMixedLocalizations": true,
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
