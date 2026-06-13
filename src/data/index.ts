@@ -15,6 +15,7 @@ export {
   addReminder,
   setReminderDone,
   deleteReminder,
+  updateReminder,
   setRsvp,
   sendMessage,
   subscribeMessages,
@@ -23,6 +24,7 @@ export {
   setMenuAvailable,
   addMenuItem,
   uploadMenuImage,
+  uploadAvatar,
   sendNotice,
   markMailRead,
   loadAllData,
@@ -36,6 +38,14 @@ export {
   updateOrderStatus,
   DELIVERY_LOCATIONS,
   deliveryLabel,
+  listOfficeHourTeachers,
+  listOfficeHours,
+  addOfficeHour,
+  deleteOfficeHour,
+  fetchBookedSlotTimes,
+  bookAppointment,
+  fetchMyAppointments,
+  cancelAppointment,
 } from './repo';
 export type { Contact } from './repo';
 export { useDataStore } from '@/lib/store';

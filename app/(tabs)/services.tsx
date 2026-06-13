@@ -1,18 +1,20 @@
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Header, IconTile, Screen, Text } from '@/components';
+import { Ionicons } from '@expo/vector-icons';
+import { Card, Header, Screen, Text } from '@/components';
 import { useAuth } from '@/lib/auth';
 import { useLang } from '@/hooks/useLang';
 import { servicesByGroup, type ServiceGroup } from '@/features/services/catalog';
-import { spacing } from '@/theme';
+import { colors, spacing } from '@/theme';
 
 const GROUPS: ServiceGroup[] = ['academic', 'campus', 'support'];
 
 export default function Services() {
   const { user } = useAuth();
-  const { t } = useLang();
+  const { t, isRTL } = useLang();
   const router = useRouter();
   if (!user) return null;
+  const chevron = isRTL ? 'chevron-back' : 'chevron-forward';
 
   return (
     <View style={{ flex: 1 }}>
@@ -22,22 +24,39 @@ export default function Services() {
           const items = servicesByGroup(user.role, group);
           if (items.length === 0) return null;
           return (
-            <View key={group} style={{ marginBottom: spacing.md }}>
-              <Text variant="subtitle" weight="bold" style={{ marginBottom: spacing.md, marginTop: spacing.sm }}>
+            <View key={group} style={{ marginBottom: spacing.lg }}>
+              <Text
+                variant="label"
+                weight="semibold"
+                color={colors.textMuted}
+                style={{ marginBottom: spacing.sm, textAlign: isRTL ? 'right' : 'left' }}
+              >
                 {t(`services.${group}`)}
               </Text>
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, rowGap: spacing.lg }}>
-                {items.map((s) => (
-                  <IconTile
+              <Card padded={false}>
+                {items.map((s, i) => (
+                  <Pressable
                     key={s.key}
-                    icon={s.icon}
-                    color={s.color}
-                    bg={s.bg}
-                    label={t(`sections.${s.key}.title`)}
                     onPress={() => router.push(s.route as never)}
-                  />
+                    style={({ pressed }) => [
+                      {
+                        flexDirection: isRTL ? 'row-reverse' : 'row',
+                        alignItems: 'center',
+                        gap: spacing.md,
+                        paddingVertical: 14,
+                        paddingHorizontal: spacing.md,
+                        borderTopWidth: i === 0 ? 0 : 1,
+                        borderTopColor: colors.divider,
+                      },
+                      pressed && { backgroundColor: colors.surfaceAlt },
+                    ]}
+                  >
+                    <Ionicons name={s.icon} size={21} color={colors.textSecondary} />
+                    <Text style={{ flex: 1 }}>{t(`sections.${s.key}.title`)}</Text>
+                    <Ionicons name={chevron} size={16} color={colors.textMuted} />
+                  </Pressable>
                 ))}
-              </View>
+              </Card>
             </View>
           );
         })}

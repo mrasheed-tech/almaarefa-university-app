@@ -30,9 +30,10 @@ export const SERVICES: ServiceDef[] = [
   // Academic
   { key: 'calendar', icon: 'calendar', ...tint.teal, route: '/(tabs)/calendar', group: 'academic' },
   { key: 'grades', icon: 'ribbon', ...tint.gold, route: '/section/grades', group: 'academic', roles: ['student'] },
-  { key: 'moodle', icon: 'book', ...tint.green, route: '/webview/moodle', group: 'academic' },
-  { key: 'portal', icon: 'globe', ...tint.blue, route: '/webview/portal', group: 'academic' },
+  { key: 'courses', icon: 'reader', ...tint.teal, route: '/section/courses', group: 'academic', roles: ['student', 'teacher'] },
   { key: 'research', icon: 'flask', ...tint.purple, route: '/section/research', group: 'academic' },
+  { key: 'selfStudy', icon: 'school', ...tint.teal, route: '/section/self-study', group: 'academic' },
+  { key: 'appointments', icon: 'calendar-number', ...tint.blue, route: '/section/appointments', group: 'academic', roles: ['student', 'teacher'] },
   { key: 'messages', icon: 'chatbubbles', ...tint.teal, route: '/section/messages', group: 'academic', roles: ['student', 'teacher', 'advisor'] },
   { key: 'invigilation', icon: 'clipboard', ...tint.slate, route: '/section/invigilation', group: 'academic', roles: ['teacher'] },
   { key: 'notices', icon: 'megaphone', ...tint.gold, route: '/section/notices', group: 'academic', roles: ['advisor'] },
@@ -43,7 +44,6 @@ export const SERVICES: ServiceDef[] = [
   { key: 'events', icon: 'sparkles', ...tint.gold, route: '/section/events', group: 'campus' },
   { key: 'shuttle', icon: 'bus', ...tint.green, route: '/section/shuttle', group: 'campus' },
   { key: 'food', icon: 'restaurant', ...tint.red, route: '/section/food', group: 'campus' },
-  { key: 'map', icon: 'map', ...tint.blue, route: '/section/map', group: 'campus' },
   { key: 'directory', icon: 'people', ...tint.slate, route: '/section/directory', group: 'campus' },
   { key: 'news', icon: 'newspaper', ...tint.teal, route: '/section/news', group: 'campus' },
   { key: 'id', icon: 'card', ...tint.purple, route: '/section/id', group: 'campus' },
@@ -52,8 +52,6 @@ export const SERVICES: ServiceDef[] = [
   // Support
   { key: 'reminders', icon: 'alarm', ...tint.gold, route: '/section/reminders', group: 'support' },
   { key: 'mail', icon: 'mail', ...tint.teal, route: '/(tabs)/mail', group: 'support' },
-  { key: 'emergency', icon: 'medkit', ...tint.red, route: '/section/emergency', group: 'support' },
-  { key: 'library', icon: 'library', ...tint.blue, route: '/section/library', group: 'support' },
 ];
 
 export function servicesFor(role: Role): ServiceDef[] {

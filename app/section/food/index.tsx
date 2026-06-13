@@ -21,7 +21,7 @@ export default function FoodList() {
         subtitle={t('sections.food.subtitle')}
         right={
           <Pressable onPress={() => router.push('/section/orders')} hitSlop={10}>
-            <Ionicons name="receipt-outline" size={22} color="#fff" />
+            <Ionicons name="receipt-outline" size={22} color={colors.primary} />
           </Pressable>
         }
       />

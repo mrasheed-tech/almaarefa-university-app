@@ -20,7 +20,7 @@ export default function MessagesList() {
         subtitle={t('sections.messages.subtitle')}
         right={
           <Pressable onPress={() => router.push('/section/messages/new' as never)} hitSlop={10}>
-            <Ionicons name="create-outline" size={24} color="#fff" />
+            <Ionicons name="create-outline" size={24} color={colors.primary} />
           </Pressable>
         }
       />

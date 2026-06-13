@@ -13,6 +13,7 @@ export interface User {
   level?: string;
   gpa?: number;
   avatarColor: string;
+  avatarUrl?: string;
 }
 
 export interface ClassSession {
@@ -205,6 +206,30 @@ export interface GradeRow {
   credits: number;
   grade: string;
   points: number;
+}
+
+export interface OfficeHour {
+  id: string;
+  teacherId: string;
+  weekday: number; // 0 = Sunday … 6 = Saturday
+  start: string; // 'HH:mm'
+  end: string; // 'HH:mm'
+  slotMinutes: number;
+  location?: string;
+}
+
+export interface Appointment {
+  id: string;
+  teacherId: string;
+  studentId: string;
+  startsAt: string; // ISO
+  endsAt: string; // ISO
+  reason?: string;
+  status: 'booked' | 'cancelled';
+  teacherNameEn?: string;
+  teacherNameAr?: string;
+  studentNameEn?: string;
+  studentNameAr?: string;
 }
 
 export interface OrderItem {

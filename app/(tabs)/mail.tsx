@@ -26,7 +26,7 @@ export default function Mail() {
         subtitle={unreadCount > 0 ? t('mail.unread', { count: unreadCount }) : t('mail.inbox')}
         right={
           <Pressable onPress={() => router.push('/webview/webmail')} hitSlop={10}>
-            <Ionicons name="open-outline" size={22} color="#fff" />
+            <Ionicons name="open-outline" size={22} color={colors.primary} />
           </Pressable>
         }
       />

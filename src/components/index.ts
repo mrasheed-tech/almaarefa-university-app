@@ -12,4 +12,5 @@ export { EmptyState } from './EmptyState';
 export { SegmentedControl } from './SegmentedControl';
 export { IconTile } from './IconTile';
 export { TextField } from './TextField';
+export { DateTimeField } from './DateTimeField';
 export { Chip } from './Chip';

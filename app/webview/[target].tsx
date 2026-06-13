@@ -10,10 +10,11 @@ import { useLang } from '@/hooks/useLang';
 import { config } from '@/lib/config';
 import { colors, gradients, spacing } from '@/theme';
 
-const TARGETS: Record<string, { url: string; titleKey: string }> = {
-  portal: { url: config.portalUrl, titleKey: 'sections.portal.title' },
-  moodle: { url: config.moodleUrl, titleKey: 'sections.moodle.title' },
-  webmail: { url: config.webmailUrl, titleKey: 'mail.openWebmail' },
+const TARGETS: Record<string, { url: string; titleKey: string; secure?: boolean }> = {
+  portal: { url: config.portalUrl, titleKey: 'sections.portal.title', secure: true },
+  moodle: { url: config.moodleUrl, titleKey: 'sections.moodle.title', secure: true },
+  webmail: { url: config.webmailUrl, titleKey: 'mail.openWebmail', secure: true },
+  courseparse: { url: 'https://www.courseparse.com', titleKey: 'selfStudy.courseparse' },
 };
 
 export default function WebViewScreen() {
@@ -64,14 +65,14 @@ export default function WebViewScreen() {
     </LinearGradient>
   );
 
-  const SecureNote = (
+  const SecureNote = conf.secure ? (
     <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', alignItems: 'center', gap: 6, padding: spacing.sm, backgroundColor: colors.primaryTint }}>
       <Ionicons name="lock-closed" size={13} color={colors.primaryDark} />
       <Text variant="caption" color={colors.primaryDark} style={{ flex: 1 }}>
         {t('webview.secureNote')}
       </Text>
     </View>
-  );
+  ) : null;
 
   // On web, university portals block being embedded in an iframe, so open externally.
   if (Platform.OS === 'web') {

@@ -31,6 +31,7 @@ function mapProfileToUser(p: any): User {
     level: p.level ?? undefined,
     gpa: p.gpa != null ? Number(p.gpa) : undefined,
     avatarColor: p.avatar_color ?? '#00ADCA',
+    avatarUrl: p.avatar_url ?? undefined,
   };
 }
 

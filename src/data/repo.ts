@@ -4,6 +4,7 @@ import { sendPush } from '@/lib/notifications';
 import { useDataStore, type DataState } from '@/lib/store';
 import type {
   Advisee,
+  Appointment,
   CampusEvent,
   ChatMessage,
   ClassSession,
@@ -17,6 +18,7 @@ import type {
   MailMessage,
   MenuItem,
   Notice,
+  OfficeHour,
   OrderItem,
   OrderStatus,
   Reminder,
@@ -301,6 +303,10 @@ export async function deleteReminder(id: string): Promise<void> {
   await supabase.from('reminders').delete().eq('id', id);
 }
 
+export async function updateReminder(id: string, title: string, dueAtISO: string): Promise<void> {
+  await supabase.from('reminders').update({ title, due_at: dueAtISO }).eq('id', id);
+}
+
 export async function setRsvp(uid: string, eventId: string, going: boolean): Promise<void> {
   if (going) await supabase.from('event_rsvps').upsert({ event_id: eventId, user_id: uid });
   else await supabase.from('event_rsvps').delete().eq('event_id', eventId).eq('user_id', uid);
@@ -440,6 +446,22 @@ export async function uploadMenuImage(itemId: string, base64: string): Promise<s
   return supabase.storage.from('menu').getPublicUrl(path).data.publicUrl;
 }
 
+/** Upload a student-card photo to the public `avatars` bucket (path: uid/timestamp.jpg). */
+export async function uploadAvatar(uid: string, base64: string): Promise<string | null> {
+  // Unique filename per upload — avoids the upsert path (which storage RLS rejects).
+  const path = `${uid}/${Date.now()}.jpg`;
+  const { error } = await supabase.storage
+    .from('avatars')
+    .upload(path, decode(base64), { contentType: 'image/jpeg' });
+  if (error) {
+    console.warn('[avatar] upload failed:', error.message);
+    return null;
+  }
+  const url = supabase.storage.from('avatars').getPublicUrl(path).data.publicUrl;
+  await supabase.from('profiles').update({ avatar_url: url }).eq('id', uid);
+  return url;
+}
+
 export async function sendNotice(advisorId: string, studentId: string, body: string): Promise<void> {
   await supabase.from('advisee_notices').insert({ advisor_id: advisorId, student_id: studentId, body });
   void sendPush({ userId: studentId, title: 'New notice from your advisor', body, data: { type: 'notice' } });
@@ -514,6 +536,118 @@ export async function fetchVendorOrders(vendorId: string): Promise<FoodOrder[]> 
 
 export async function updateOrderStatus(id: string, status: OrderStatus): Promise<void> {
   await (supabase as any).from('food_orders').update({ status }).eq('id', id);
+}
+
+/* ------------------------------ appointments ------------------------------ */
+const mapOfficeHour = (r: any): OfficeHour => ({
+  id: r.id,
+  teacherId: r.teacher_id,
+  weekday: r.weekday,
+  start: String(r.start_time ?? '').slice(0, 5),
+  end: String(r.end_time ?? '').slice(0, 5),
+  slotMinutes: r.slot_minutes ?? 20,
+  location: r.location ?? undefined,
+});
+
+const mapAppointment = (r: any): Appointment => ({
+  id: r.id,
+  teacherId: r.teacher_id,
+  studentId: r.student_id,
+  startsAt: r.starts_at,
+  endsAt: r.ends_at,
+  reason: r.reason ?? undefined,
+  status: r.status ?? 'booked',
+  teacherNameEn: r.teacher?.name_en,
+  teacherNameAr: r.teacher?.name_ar,
+  studentNameEn: r.student?.name_en,
+  studentNameAr: r.student?.name_ar,
+});
+
+/** Teachers who have published office hours (for the student's picker). */
+export async function listOfficeHourTeachers(): Promise<Contact[]> {
+  const { data } = await supabase
+    .from('office_hours')
+    .select('teacher:profiles!office_hours_teacher_id_fkey(id,name_en,name_ar,role,university_id)');
+  const map = new Map<string, Contact>();
+  for (const r of (data ?? []) as any[]) {
+    const tch = r.teacher;
+    if (tch && !map.has(tch.id)) {
+      map.set(tch.id, { id: tch.id, nameEn: tch.name_en, nameAr: tch.name_ar, role: tch.role, universityId: tch.university_id });
+    }
+  }
+  return [...map.values()];
+}
+
+export async function listOfficeHours(teacherId: string): Promise<OfficeHour[]> {
+  const { data } = await supabase
+    .from('office_hours')
+    .select('*')
+    .eq('teacher_id', teacherId)
+    .order('weekday')
+    .order('start_time');
+  return (data ?? []).map(mapOfficeHour);
+}
+
+export async function addOfficeHour(
+  teacherId: string,
+  weekday: number,
+  start: string,
+  end: string,
+  slotMinutes: number,
+  location: string,
+): Promise<OfficeHour | null> {
+  const { data, error } = await supabase
+    .from('office_hours')
+    .insert({ teacher_id: teacherId, weekday, start_time: start, end_time: end, slot_minutes: slotMinutes, location: location || null })
+    .select()
+    .single();
+  if (error) {
+    console.warn('[appointments] addOfficeHour failed:', error.message);
+    return null;
+  }
+  return data ? mapOfficeHour(data) : null;
+}
+
+export async function deleteOfficeHour(id: string): Promise<void> {
+  await supabase.from('office_hours').delete().eq('id', id);
+}
+
+/** Booked start times (epoch ms) for a teacher — used to hide taken slots. */
+export async function fetchBookedSlotTimes(teacherId: string): Promise<number[]> {
+  const { data } = await supabase.from('appointments').select('starts_at').eq('teacher_id', teacherId).eq('status', 'booked');
+  return (data ?? []).map((r: any) => new Date(r.starts_at).getTime());
+}
+
+export async function bookAppointment(
+  teacherId: string,
+  studentId: string,
+  startsAt: string,
+  endsAt: string,
+  reason: string,
+): Promise<Appointment | null> {
+  const { data, error } = await supabase
+    .from('appointments')
+    .insert({ teacher_id: teacherId, student_id: studentId, starts_at: startsAt, ends_at: endsAt, reason: reason || null, status: 'booked' })
+    .select()
+    .single();
+  if (error) {
+    console.warn('[appointments] book failed:', error.message);
+    return null;
+  }
+  void sendPush({ userId: teacherId, title: 'New appointment booked', body: 'A student booked an office-hours slot.', data: { type: 'appointment' } });
+  return data ? mapAppointment(data) : null;
+}
+
+export async function fetchMyAppointments(uid: string, role: Role): Promise<Appointment[]> {
+  const sel = '*, teacher:profiles!appointments_teacher_id_fkey(name_en,name_ar), student:profiles!appointments_student_id_fkey(name_en,name_ar)';
+  const base = supabase.from('appointments').select(sel).eq('status', 'booked').gte('starts_at', new Date().toISOString());
+  const { data } =
+    role === 'teacher' ? await base.eq('teacher_id', uid).order('starts_at') : await base.eq('student_id', uid).order('starts_at');
+  return (data ?? []).map(mapAppointment);
+}
+
+export async function cancelAppointment(id: string): Promise<void> {
+  await supabase.from('appointments').update({ status: 'cancelled' }).eq('id', id);
 }
 
 /** Convenience: update one slice of the store in place. */

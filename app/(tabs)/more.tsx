@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Switch, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Avatar, Badge, Button, Card, Header, ListItem, Screen, Text } from '@/components';
 import { useAuth } from '@/lib/auth';
@@ -14,6 +15,7 @@ function Divider() {
 export default function More() {
   const { user, signOut } = useAuth();
   const { t, lang, setLang, pick, isRTL } = useLang();
+  const router = useRouter();
   const [notif, setNotif] = useState(true);
   if (!user) return null;
 
@@ -52,6 +54,8 @@ export default function More() {
         <Card>
           <ListItem
             icon="language"
+            iconColor={colors.textSecondary}
+            iconBg="#ECEFF3"
             title={t('settings.language')}
             value={lang === 'ar' ? 'العربية' : 'English'}
             chevron
@@ -59,14 +63,23 @@ export default function More() {
           />
           <Divider />
           <ListItem
+            icon="key"
+            iconColor={colors.textSecondary}
+            iconBg="#ECEFF3"
+            title={t('settings.changePassword')}
+            chevron
+            onPress={() => router.push('/section/change-password')}
+          />
+          <Divider />
+          <ListItem
             icon="notifications"
-            iconColor={palette.gold}
-            iconBg={colors.warningTint}
+            iconColor={colors.textSecondary}
+            iconBg="#ECEFF3"
             title={t('settings.notifications')}
             trailing={<Switch value={notif} onValueChange={setNotif} trackColor={{ true: colors.primary, false: palette.gray300 }} thumbColor="#fff" />}
           />
           <Divider />
-          <ListItem icon="information-circle" title={t('settings.about')} value={`v${config.appVersion}`} />
+          <ListItem icon="information-circle" iconColor={colors.textSecondary} iconBg="#ECEFF3" title={t('settings.about')} value={`v${config.appVersion}`} />
         </Card>
 
         <View style={{ marginTop: spacing.lg }}>
