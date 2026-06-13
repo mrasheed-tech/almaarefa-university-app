@@ -42,6 +42,13 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleTeamId": "DLA88P9499",
+        "ascApiKeyPath": "./credentials/AuthKey_8853XF9966.p8",
+        "ascApiKeyId": "8853XF9966",
+        "ascApiKeyIssuerId": "452ac26f-b32a-4318-aebd-7f1e3445fdb8"
+      }
+    }
   }
 }
