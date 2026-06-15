@@ -1,0 +1,83 @@
+# Codemagic CI/CD — Almaarefa University App
+# Pipeline: push to GitHub → Codemagic builds (Expo prebuild + Xcode) → TestFlight
+# Reference: https://docs.codemagic.io/yaml-quick-start/building-a-react-native-app/
+#
+# One-time setup in the Codemagic UI:
+#   1. Connect this GitHub repo to Codemagic.
+#   2. Add your App Store Connect API key (Teams → Integrations → App Store Connect)
+#      and name it EXACTLY "Almaarefa ASC API Key" — or change the name under
+#      `integrations.app_store_connect` below to match.
+
+workflows:
+  ios-testflight:
+    name: iOS -> TestFlight
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: master            # change if you build from a different branch
+          include: true
+
+    integrations:
+      app_store_connect: Almaarefa ASC API Key   # must match the integration name in Codemagic UI
+
+    environment:
+      ios_signing:
+        distribution_type: app_store             # automatic signing -> fresh profile incl. Push capability
+        bundle_identifier: sa.edu.um.app
+      node: 20.20.2
+      xcode: 16.2                                # known-good for RN 0.76 / Expo SDK 52; bump if Codemagic flags it
+      cocoapods: default
+      vars:
+        XCODE_WORKSPACE: "AlmaarefaUniversity.xcworkspace"
+        XCODE_SCHEME: "AlmaarefaUniversity"
+        BUNDLE_ID: "sa.edu.um.app"
+        APP_STORE_APPLE_ID: ""                   # numeric Apple ID (App Store Connect -> App Information). Leave blank for the first build.
+        # --- Expo public env, inlined into the JS bundle at build time (publishable, not secrets) ---
+        EXPO_PUBLIC_SUPABASE_URL: "https://mkpvhnpobhfjhtotcktb.supabase.co"
+        EXPO_PUBLIC_SUPABASE_ANON_KEY: "sb_publishable_N6lV07f9Ibw6yFe7IEd08w_t4-Z8dP9"
+        EXPO_PUBLIC_PORTAL_URL: "https://portal.um.edu.sa"
+        EXPO_PUBLIC_MOODLE_URL: "https://lms.um.edu.sa"
+        EXPO_PUBLIC_WEBMAIL_URL: "https://outlook.office.com/mail/"
+
+    scripts:
+      - name: Install JS dependencies
+        script: npm ci
+
+      - name: Expo prebuild (generate native ios/ project)
+        script: npx expo prebuild --platform ios --no-install
+
+      - name: Install CocoaPods
+        script: |
+          cd ios
+          pod install
+
+      - name: Fetch signing files (distribution cert + provisioning profile)
+        script: xcode-project use-profiles
+
+      - name: Set build number
+        script: |
+          cd ios
+          LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo "")
+          if [ -z "$LATEST" ]; then LATEST=2; fi   # nothing in TestFlight yet -> start above the old errored build #2
+          agvtool new-version -all $(($LATEST + 1))
+
+      - name: Build IPA
+        script: |
+          xcode-project build-ipa \
+            --workspace "ios/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        # beta_groups:            # optional: auto-add the build to an internal tester group
+        #   - Internal Testers
