@@ -22,7 +22,7 @@ workflows:
           include: true
 
     integrations:
-      app_store_connect: Almaarefa ASC API Key   # must match the integration name in Codemagic UI
+      app_store_connect: Codemagic   # matches the key name in Personal Account -> Settings -> Developer Portal
 
     environment:
       ios_signing:
