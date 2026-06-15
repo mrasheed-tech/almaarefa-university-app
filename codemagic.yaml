@@ -35,14 +35,12 @@ workflows:
         XCODE_WORKSPACE: "AlmaarefaUniversity.xcworkspace"
         XCODE_SCHEME: "AlmaarefaUniversity"
         BUNDLE_ID: "sa.edu.um.app"
-        APP_STORE_APPLE_ID: ""                   # numeric Apple ID (App Store Connect -> App Information). Leave blank for the first build.
         # --- Expo public env, inlined into the JS bundle at build time (publishable, not secrets) ---
         EXPO_PUBLIC_SUPABASE_URL: "https://mkpvhnpobhfjhtotcktb.supabase.co"
         EXPO_PUBLIC_SUPABASE_ANON_KEY: "sb_publishable_N6lV07f9Ibw6yFe7IEd08w_t4-Z8dP9"
         EXPO_PUBLIC_PORTAL_URL: "https://portal.um.edu.sa"
         EXPO_PUBLIC_MOODLE_URL: "https://lms.um.edu.sa"
         EXPO_PUBLIC_WEBMAIL_URL: "https://outlook.office.com/mail/"
-        # APP_STORE_APPLE_ID: ""   # numeric App Store app ID — add once the app exists in App Store Connect
 
     scripts:
       - name: Install JS dependencies
