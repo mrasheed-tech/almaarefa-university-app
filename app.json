@@ -19,7 +19,7 @@
         "CFBundleAllowMixedLocalizations": true,
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "2"
+      "buildNumber": "4"
     },
     "android": {
       "package": "sa.edu.um.app",
@@ -38,6 +38,16 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "extraPodfileProperties": {
+              "OTHER_CPLUSPLUSFLAGS": "$(inherited) -DFMT_USE_CONSTEVAL=0"
+            }
+          }
+        }
+      ],
       "expo-router",
       "expo-localization",
       "expo-secure-store",
