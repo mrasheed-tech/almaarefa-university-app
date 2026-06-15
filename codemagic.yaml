@@ -42,6 +42,7 @@ workflows:
         EXPO_PUBLIC_PORTAL_URL: "https://portal.um.edu.sa"
         EXPO_PUBLIC_MOODLE_URL: "https://lms.um.edu.sa"
         EXPO_PUBLIC_WEBMAIL_URL: "https://outlook.office.com/mail/"
+        # APP_STORE_APPLE_ID: ""   # numeric App Store app ID — add once the app exists in App Store Connect
 
     scripts:
       - name: Install JS dependencies
@@ -61,9 +62,8 @@ workflows:
       - name: Set build number
         script: |
           cd ios
-          LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo "")
-          if [ -z "$LATEST" ]; then LATEST=2; fi   # nothing in TestFlight yet -> start above the old errored build #2
-          agvtool new-version -all $(($LATEST + 1))
+          BUILD_NUMBER=$(git rev-list --count HEAD)
+          agvtool new-version -all $BUILD_NUMBER
 
       - name: Build IPA
         script: |
