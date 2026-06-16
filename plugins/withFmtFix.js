@@ -34,7 +34,7 @@ module.exports = function withFmtFix(config) {
     content = File.read(xcconfig_path)
     unless content.include?('FMT_CONSTEVAL_FIX')
       File.open(xcconfig_path, 'a') do |f|
-        f.puts '# FMT_CONSTEVAL_FIX'
+        f.puts '// FMT_CONSTEVAL_FIX'
         f.puts 'OTHER_CPLUSPLUSFLAGS = $(inherited) -DFMT_CONSTEVAL=constexpr -DFMT_USE_CONSTEVAL=0'
         f.puts 'GCC_PREPROCESSOR_DEFINITIONS = $(inherited) FMT_USE_CONSTEVAL=0'
       end
