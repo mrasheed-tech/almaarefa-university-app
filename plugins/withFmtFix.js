@@ -18,21 +18,19 @@ module.exports = function withFmtFix(config) {
 
       if (!podfile.includes('FMT_CONSTEVAL_FIX')) {
         const fmtPatch = `
-  # FMT_CONSTEVAL_FIX: patch fmt source headers for Xcode 26 / Clang 17+ compatibility.
-  # The fmt version in Folly redefines FMT_CONSTEVAL unconditionally (no #ifndef guard),
-  # so -D compiler flags are overridden. We must patch the source directly.
+  # FMT_CONSTEVAL_FIX: replace consteval with constexpr in RCT-Folly and fmt pods.
+  # Xcode 26 / Clang 17+ errors on consteval calls in non-constant contexts.
+  # Scoped to just these two pods to avoid touching hermes or other native code.
   pods_root = installer.sandbox.root.to_s
-  Dir.glob(pods_root + '/**/*.{h,hpp}') do |header_path|
-    begin
-      content = File.read(header_path)
-      if content.include?('define FMT_CONSTEVAL consteval')
-        patched = content.gsub(
-          /^(\s*#\s*define\s+FMT_CONSTEVAL\s+)consteval(\s*)$/,
-          '\\1constexpr\\2'
-        )
-        File.write(header_path, patched) if patched != content
+  ['RCT-Folly', 'fmt'].each do |pod_name|
+    Dir.glob(pods_root + '/' + pod_name + '/**/*.{h,hpp,cpp,cc,cxx,c}') do |file_path|
+      begin
+        content = File.read(file_path)
+        if content.include?('consteval')
+          File.write(file_path, content.gsub(/\\bconsteval\\b/, 'constexpr'))
+        end
+      rescue
       end
-    rescue
     end
   end`;
 
