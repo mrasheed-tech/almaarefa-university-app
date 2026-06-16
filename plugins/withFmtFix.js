@@ -16,9 +16,8 @@ module.exports = function withFmtFix(config) {
         podfile += `
 post_install do |installer|
   installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      flags = config.build_settings['OTHER_CPLUSPLUSFLAGS'] || '$(inherited)'
-      config.build_settings['OTHER_CPLUSPLUSFLAGS'] = flags + ' -DFMT_USE_CONSTEVAL=0'
+    target.build_configurations.each do |build_config|
+      build_config.build_settings['OTHER_CPLUSPLUSFLAGS'] = '$(inherited) -DFMT_USE_CONSTEVAL=0'
     end
   end
 end
