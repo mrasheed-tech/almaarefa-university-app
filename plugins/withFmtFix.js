@@ -13,6 +13,22 @@ module.exports = function withFmtFix(config) {
   return withDangerousMod(config, [
     'ios',
     (config) => {
+      // Patch expo-localization Swift file: add @unknown default to Calendar.Identifier switch.
+      // Xcode 26 added new Calendar.Identifier cases that make this switch non-exhaustive.
+      const localizationSwiftPath = path.join(
+        config.modRequest.projectRoot,
+        'node_modules/expo-localization/ios/LocalizationModule.swift'
+      );
+      if (fs.existsSync(localizationSwiftPath)) {
+        let swift = fs.readFileSync(localizationSwiftPath, 'utf8');
+        const oldCase = '    case .iso8601:\n      return "iso8601"\n    }';
+        const newCase = '    case .iso8601:\n      return "iso8601"\n    @unknown default:\n      return "gregory"\n    }';
+        if (!swift.includes('@unknown default') && swift.includes(oldCase)) {
+          swift = swift.replace(oldCase, newCase);
+          fs.writeFileSync(localizationSwiftPath, swift);
+        }
+      }
+
       const podfilePath = path.join(config.modRequest.platformProjectRoot, 'Podfile');
       let podfile = fs.readFileSync(podfilePath, 'utf8');
 
