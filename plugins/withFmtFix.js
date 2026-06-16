@@ -18,26 +18,21 @@ module.exports = function withFmtFix(config) {
 
       if (!podfile.includes('FMT_CONSTEVAL_FIX')) {
         const fmtPatch = `
-  # FMT_CONSTEVAL_FIX: override FMT_CONSTEVAL to constexpr for Xcode 26 / Clang 17+
-  # Folly's fmt declares basic_format_string's ctor as FMT_CONSTEVAL (=consteval).
-  # Clang 17+ errors when consteval functions are called in non-constant contexts.
-  # Setting FMT_CONSTEVAL=constexpr removes the restriction without breaking fmt.
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |build_config|
-      build_config.build_settings['OTHER_CPLUSPLUSFLAGS'] = '$(inherited) -DFMT_CONSTEVAL=constexpr -DFMT_USE_CONSTEVAL=0'
-      build_config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] = '$(inherited) FMT_USE_CONSTEVAL=0'
-    end
-  end
-  # Also patch the xcconfig files directly — xcconfigs override .xcodeproj build settings.
+  # FMT_CONSTEVAL_FIX: patch fmt source headers for Xcode 26 / Clang 17+ compatibility.
+  # The fmt version in Folly redefines FMT_CONSTEVAL unconditionally (no #ifndef guard),
+  # so -D compiler flags are overridden. We must patch the source directly.
   pods_root = installer.sandbox.root.to_s
-  Dir.glob(pods_root + '/Target Support Files/**/*.xcconfig') do |xcconfig_path|
-    content = File.read(xcconfig_path)
-    unless content.include?('FMT_CONSTEVAL_FIX')
-      File.open(xcconfig_path, 'a') do |f|
-        f.puts '// FMT_CONSTEVAL_FIX'
-        f.puts 'OTHER_CPLUSPLUSFLAGS = $(inherited) -DFMT_CONSTEVAL=constexpr -DFMT_USE_CONSTEVAL=0'
-        f.puts 'GCC_PREPROCESSOR_DEFINITIONS = $(inherited) FMT_USE_CONSTEVAL=0'
+  Dir.glob(pods_root + '/**/*.{h,hpp}') do |header_path|
+    begin
+      content = File.read(header_path)
+      if content.include?('define FMT_CONSTEVAL consteval')
+        patched = content.gsub(
+          /^(\s*#\s*define\s+FMT_CONSTEVAL\s+)consteval(\s*)$/,
+          '\\1constexpr\\2'
+        )
+        File.write(header_path, patched) if patched != content
       end
+    rescue
     end
   end`;
 
