@@ -19,7 +19,7 @@
         "CFBundleAllowMixedLocalizations": true,
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "5"
+      "buildNumber": "15"
     },
     "android": {
       "package": "sa.edu.um.app",
@@ -39,6 +39,7 @@
     },
     "plugins": [
       "./plugins/withFmtFix",
+      ["expo-build-properties", {}],
       "expo-router",
       "expo-localization",
       "expo-secure-store",
