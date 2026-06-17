@@ -82,6 +82,29 @@ export default function More() {
           <ListItem icon="information-circle" iconColor={colors.textSecondary} iconBg="#ECEFF3" title={t('settings.about')} value={`v${config.appVersion}`} />
         </Card>
 
+        <Text variant="subtitle" weight="bold" style={{ marginTop: spacing.lg, marginBottom: spacing.sm }}>
+          {pick('Legal', 'قانوني')}
+        </Text>
+        <Card>
+          <ListItem
+            icon="shield-checkmark"
+            iconColor={colors.textSecondary}
+            iconBg="#ECEFF3"
+            title={t('settings.privacy')}
+            chevron
+            onPress={() => router.push('/section/privacy')}
+          />
+          <Divider />
+          <ListItem
+            icon="document-text"
+            iconColor={colors.textSecondary}
+            iconBg="#ECEFF3"
+            title={t('settings.terms')}
+            chevron
+            onPress={() => router.push('/section/terms')}
+          />
+        </Card>
+
         <View style={{ marginTop: spacing.lg }}>
           <Button title={t('settings.logout')} icon="log-out-outline" variant="danger" onPress={signOut} />
         </View>

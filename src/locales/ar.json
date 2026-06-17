@@ -80,34 +80,118 @@
     "headerSubtitle": "كل خدمات المعرفة في مكان واحد"
   },
   "sections": {
-    "reminders": { "title": "التذكيرات", "subtitle": "المهام والمواعيد" },
-    "mail": { "title": "البريد", "subtitle": "صندوق الجامعة" },
-    "calendar": { "title": "التقويم", "subtitle": "المحاضرات والجدول" },
-    "shuttle": { "title": "خدمة الباصات", "subtitle": "المسارات والأوقات" },
-    "food": { "title": "خدمات الطعام", "subtitle": "المقاهي والمطاعم" },
-    "research": { "title": "البحث العلمي", "subtitle": "الأبحاث والفرص" },
-    "selfStudy": { "title": "الدراسة الذاتية", "subtitle": "أدوات للدراسة وتدريبات إنجليزية" },
-    "appointments": { "title": "المواعيد", "subtitle": "الساعات المكتبية والحجوزات" },
-    "events": { "title": "الفعاليات", "subtitle": "ما يحدث في الحرم" },
-    "excuses": { "title": "الأعذار", "subtitle": "تقديم التقارير الطبية والغياب" },
-    "invigilation": { "title": "المراقبة", "subtitle": "مهام الاختبارات" },
-    "notices": { "title": "إشعارات الإرشاد", "subtitle": "مراسلة الطلاب المرشدين" },
-    "messages": { "title": "الرسائل", "subtitle": "محادثات الطلاب والأعضاء" },
-    "id": { "title": "البطاقة الرقمية", "subtitle": "بطاقتك الجامعية" },
-    "studentCard": { "title": "البطاقة الطلابية", "subtitle": "هوية بصورتك للاختبارات" },
-    "directory": { "title": "الدليل", "subtitle": "الأشخاص والأقسام" },
-    "news": { "title": "الأخبار", "subtitle": "إعلانات الجامعة" },
-    "emergency": { "title": "السلامة والطوارئ", "subtitle": "الأمن والعيادة" },
-    "map": { "title": "خريطة الحرم", "subtitle": "اعثر على طريقك" },
-    "grades": { "title": "الدرجات والحضور", "subtitle": "النتائج والحضور" },
-    "library": { "title": "المكتبة", "subtitle": "الفهرس والأوقات" },
-    "prayer": { "title": "أوقات الصلاة", "subtitle": "اليوم في الحرم" },
-    "portal": { "title": "البوابة", "subtitle": "portal.um.edu.sa" },
-    "moodle": { "title": "مودل (التعلّم)", "subtitle": "lms.um.edu.sa" },
-    "courses": { "title": "موادّي", "subtitle": "المواد والواجبات والدرجات" },
-    "settings": { "title": "الإعدادات", "subtitle": "اللغة والتفضيلات" },
-    "changePassword": { "title": "تغيير كلمة المرور", "subtitle": "تحديث كلمة مرور حسابك في التطبيق" },
-    "excuseReview": { "title": "طلبات الأعذار", "subtitle": "مراجعة طلبات الطلاب" }
+    "reminders": {
+      "title": "التذكيرات",
+      "subtitle": "المهام والمواعيد"
+    },
+    "mail": {
+      "title": "البريد",
+      "subtitle": "صندوق الجامعة"
+    },
+    "calendar": {
+      "title": "التقويم",
+      "subtitle": "المحاضرات والجدول"
+    },
+    "shuttle": {
+      "title": "خدمة الباصات",
+      "subtitle": "المسارات والأوقات"
+    },
+    "food": {
+      "title": "خدمات الطعام",
+      "subtitle": "المقاهي والمطاعم"
+    },
+    "research": {
+      "title": "البحث العلمي",
+      "subtitle": "الأبحاث والفرص"
+    },
+    "selfStudy": {
+      "title": "الدراسة الذاتية",
+      "subtitle": "أدوات للدراسة وتدريبات إنجليزية"
+    },
+    "appointments": {
+      "title": "المواعيد",
+      "subtitle": "الساعات المكتبية والحجوزات"
+    },
+    "events": {
+      "title": "الفعاليات",
+      "subtitle": "ما يحدث في الحرم"
+    },
+    "excuses": {
+      "title": "الأعذار",
+      "subtitle": "تقديم التقارير الطبية والغياب"
+    },
+    "invigilation": {
+      "title": "المراقبة",
+      "subtitle": "مهام الاختبارات"
+    },
+    "notices": {
+      "title": "إشعارات الإرشاد",
+      "subtitle": "مراسلة الطلاب المرشدين"
+    },
+    "messages": {
+      "title": "الرسائل",
+      "subtitle": "محادثات الطلاب والأعضاء"
+    },
+    "id": {
+      "title": "البطاقة الرقمية",
+      "subtitle": "بطاقتك الجامعية"
+    },
+    "studentCard": {
+      "title": "البطاقة الطلابية",
+      "subtitle": "هوية بصورتك للاختبارات"
+    },
+    "directory": {
+      "title": "الدليل",
+      "subtitle": "الأشخاص والأقسام"
+    },
+    "news": {
+      "title": "الأخبار",
+      "subtitle": "إعلانات الجامعة"
+    },
+    "emergency": {
+      "title": "السلامة والطوارئ",
+      "subtitle": "الأمن والعيادة"
+    },
+    "map": {
+      "title": "خريطة الحرم",
+      "subtitle": "اعثر على طريقك"
+    },
+    "grades": {
+      "title": "الدرجات والحضور",
+      "subtitle": "النتائج والحضور"
+    },
+    "library": {
+      "title": "المكتبة",
+      "subtitle": "الفهرس والأوقات"
+    },
+    "prayer": {
+      "title": "أوقات الصلاة",
+      "subtitle": "اليوم في الحرم"
+    },
+    "portal": {
+      "title": "البوابة",
+      "subtitle": "portal.um.edu.sa"
+    },
+    "moodle": {
+      "title": "مودل (التعلّم)",
+      "subtitle": "lms.um.edu.sa"
+    },
+    "courses": {
+      "title": "موادّي",
+      "subtitle": "المواد والواجبات والدرجات"
+    },
+    "settings": {
+      "title": "الإعدادات",
+      "subtitle": "اللغة والتفضيلات"
+    },
+    "changePassword": {
+      "title": "تغيير كلمة المرور",
+      "subtitle": "تحديث كلمة مرور حسابك في التطبيق"
+    },
+    "excuseReview": {
+      "title": "طلبات الأعذار",
+      "subtitle": "مراجعة طلبات الطلاب"
+    }
   },
   "calendar": {
     "month": "شهر",
@@ -280,7 +364,9 @@
     "about": "حول",
     "logout": "تسجيل الخروج",
     "rtlNote": "سيتحول التطبيق إلى التخطيط من اليمين إلى اليسار.",
-    "version": "الإصدار"
+    "version": "الإصدار",
+    "privacy": "سياسة الخصوصية",
+    "terms": "الشروط والأحكام"
   },
   "grades": {
     "tabGrades": "الدرجات",

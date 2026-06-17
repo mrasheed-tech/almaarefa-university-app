@@ -80,34 +80,118 @@
     "headerSubtitle": "Everything Almaarefa, in one place"
   },
   "sections": {
-    "reminders": { "title": "Reminders", "subtitle": "Tasks & deadlines" },
-    "mail": { "title": "Mail", "subtitle": "University inbox" },
-    "calendar": { "title": "Calendar", "subtitle": "Classes & schedule" },
-    "shuttle": { "title": "Shuttle Service", "subtitle": "Routes & times" },
-    "food": { "title": "Food Services", "subtitle": "Cafes & restaurants" },
-    "research": { "title": "Research", "subtitle": "Publications & opportunities" },
-    "selfStudy": { "title": "Self-Study", "subtitle": "Study tools & English practice" },
-    "appointments": { "title": "Appointments", "subtitle": "Office hours & bookings" },
-    "events": { "title": "Events", "subtitle": "What's on campus" },
-    "excuses": { "title": "Excuses", "subtitle": "Submit sick notes & absences" },
-    "invigilation": { "title": "Invigilation", "subtitle": "Your exam duties" },
-    "notices": { "title": "Advisee Notices", "subtitle": "Message your advisees" },
-    "messages": { "title": "Messages", "subtitle": "Chats with faculty & students" },
-    "id": { "title": "Digital ID", "subtitle": "Your campus card" },
-    "studentCard": { "title": "Student Card", "subtitle": "Your photo ID for exams" },
-    "directory": { "title": "Directory", "subtitle": "People & departments" },
-    "news": { "title": "News", "subtitle": "University announcements" },
-    "emergency": { "title": "Safety & Emergency", "subtitle": "Security & clinic" },
-    "map": { "title": "Campus Map", "subtitle": "Find your way" },
-    "grades": { "title": "Grades & Attendance", "subtitle": "Results & attendance" },
-    "library": { "title": "Library", "subtitle": "Catalog & hours" },
-    "prayer": { "title": "Prayer Times", "subtitle": "Today on campus" },
-    "portal": { "title": "Portal", "subtitle": "portal.um.edu.sa" },
-    "moodle": { "title": "Moodle (LMS)", "subtitle": "lms.um.edu.sa" },
-    "courses": { "title": "My Courses", "subtitle": "Courses, assignments & grades" },
-    "settings": { "title": "Settings", "subtitle": "Language & preferences" },
-    "changePassword": { "title": "Change Password", "subtitle": "Update your app account password" },
-    "excuseReview": { "title": "Excuse Requests", "subtitle": "Review student submissions" }
+    "reminders": {
+      "title": "Reminders",
+      "subtitle": "Tasks & deadlines"
+    },
+    "mail": {
+      "title": "Mail",
+      "subtitle": "University inbox"
+    },
+    "calendar": {
+      "title": "Calendar",
+      "subtitle": "Classes & schedule"
+    },
+    "shuttle": {
+      "title": "Shuttle Service",
+      "subtitle": "Routes & times"
+    },
+    "food": {
+      "title": "Food Services",
+      "subtitle": "Cafes & restaurants"
+    },
+    "research": {
+      "title": "Research",
+      "subtitle": "Publications & opportunities"
+    },
+    "selfStudy": {
+      "title": "Self-Study",
+      "subtitle": "Study tools & English practice"
+    },
+    "appointments": {
+      "title": "Appointments",
+      "subtitle": "Office hours & bookings"
+    },
+    "events": {
+      "title": "Events",
+      "subtitle": "What's on campus"
+    },
+    "excuses": {
+      "title": "Excuses",
+      "subtitle": "Submit sick notes & absences"
+    },
+    "invigilation": {
+      "title": "Invigilation",
+      "subtitle": "Your exam duties"
+    },
+    "notices": {
+      "title": "Advisee Notices",
+      "subtitle": "Message your advisees"
+    },
+    "messages": {
+      "title": "Messages",
+      "subtitle": "Chats with faculty & students"
+    },
+    "id": {
+      "title": "Digital ID",
+      "subtitle": "Your campus card"
+    },
+    "studentCard": {
+      "title": "Student Card",
+      "subtitle": "Your photo ID for exams"
+    },
+    "directory": {
+      "title": "Directory",
+      "subtitle": "People & departments"
+    },
+    "news": {
+      "title": "News",
+      "subtitle": "University announcements"
+    },
+    "emergency": {
+      "title": "Safety & Emergency",
+      "subtitle": "Security & clinic"
+    },
+    "map": {
+      "title": "Campus Map",
+      "subtitle": "Find your way"
+    },
+    "grades": {
+      "title": "Grades & Attendance",
+      "subtitle": "Results & attendance"
+    },
+    "library": {
+      "title": "Library",
+      "subtitle": "Catalog & hours"
+    },
+    "prayer": {
+      "title": "Prayer Times",
+      "subtitle": "Today on campus"
+    },
+    "portal": {
+      "title": "Portal",
+      "subtitle": "portal.um.edu.sa"
+    },
+    "moodle": {
+      "title": "Moodle (LMS)",
+      "subtitle": "lms.um.edu.sa"
+    },
+    "courses": {
+      "title": "My Courses",
+      "subtitle": "Courses, assignments & grades"
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Language & preferences"
+    },
+    "changePassword": {
+      "title": "Change Password",
+      "subtitle": "Update your app account password"
+    },
+    "excuseReview": {
+      "title": "Excuse Requests",
+      "subtitle": "Review student submissions"
+    }
   },
   "calendar": {
     "month": "Month",
@@ -280,7 +364,9 @@
     "about": "About",
     "logout": "Sign out",
     "rtlNote": "The app will switch to right-to-left layout.",
-    "version": "Version"
+    "version": "Version",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions"
   },
   "grades": {
     "tabGrades": "Grades",
