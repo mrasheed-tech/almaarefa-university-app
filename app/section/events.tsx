@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { Alert, ScrollView, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Badge, Button, Card, Chip, Header, Screen, Text } from '@/components';
 import { useLang } from '@/hooks/useLang';
@@ -28,6 +28,28 @@ export default function Events() {
 
   const cats = useMemo(() => Array.from(new Set(all.map((e) => e.category))), [all]);
   const visible = all.filter((e) => cat === 'all' || e.category === cat);
+
+  const apply = (e: CampusEvent, next: boolean) => {
+    setGoing((g) => ({ ...g, [e.id]: next }));
+    if (user) setRsvp(user.id, e.id, next);
+  };
+
+  const confirmRsvp = (e: CampusEvent) => {
+    const next = !going[e.id];
+    const title = pick(e.titleEn, e.titleAr);
+    Alert.alert(
+      next ? t('events.confirmTitle') : t('events.cancelTitle'),
+      (next ? t('events.confirmMsg', { title }) : t('events.cancelMsg', { title })) as string,
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: next ? t('events.register') : t('events.cancelYes'),
+          style: next ? 'default' : 'destructive',
+          onPress: () => apply(e, next),
+        },
+      ],
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -82,11 +104,7 @@ export default function Events() {
                   icon={going[e.id] ? 'checkmark-circle' : 'add-circle-outline'}
                   variant={going[e.id] ? 'primary' : 'outline'}
                   size="sm"
-                  onPress={() => {
-                    const next = !going[e.id];
-                    setGoing((g) => ({ ...g, [e.id]: next }));
-                    if (user) setRsvp(user.id, e.id, next);
-                  }}
+                  onPress={() => confirmRsvp(e)}
                 />
               </View>
             </Card>

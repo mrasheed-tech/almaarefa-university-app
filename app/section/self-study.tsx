@@ -32,6 +32,7 @@ const TOOLS: Tool[] = [
     name: 'Cambridge One',
     domain: 'cambridgeone.org',
     url: 'https://www.cambridgeone.org',
+    route: '/webview/cambridgeone',
     icon: 'school',
     color: palette.blue,
     bg: palette.blueTint,

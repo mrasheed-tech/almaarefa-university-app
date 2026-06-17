@@ -15,11 +15,14 @@ function gradeColor(points: number): string {
   return colors.danger;
 }
 
-function rateColor(rate: number): string {
-  if (rate >= 90) return colors.success;
-  if (rate >= 75) return colors.primary;
-  if (rate >= 60) return colors.warning;
-  return colors.danger;
+// Absence is what students watch: in Saudi universities, crossing the denial
+// threshold (typically 25%) bars you from the final exam (حرمان).
+const DENIAL_THRESHOLD = 25;
+
+function absenceColor(rate: number): string {
+  if (rate >= DENIAL_THRESHOLD) return colors.danger;
+  if (rate >= 15) return colors.warning;
+  return colors.success;
 }
 
 const TOTAL_SESSIONS = 24;
@@ -35,12 +38,15 @@ export default function Grades() {
   // Portal API we derive a deterministic demo record per enrolled course —
   // this map is the single swap point for the real Portal feed.
   const attendance = rows.map((r, i) => {
-    const absent = i % 3;
+    // Spread demo absences so a couple of courses approach the denial line.
+    const absent = (i * 2) % 7;
     const late = (i + 1) % 2;
     const present = TOTAL_SESSIONS - absent - late;
-    return { ...r, present, absent, late, rate: Math.round((present / TOTAL_SESSIONS) * 100) };
+    return { ...r, present, absent, late, absenceRate: Math.round((absent / TOTAL_SESSIONS) * 100) };
   });
-  const overallRate = attendance.length ? Math.round(attendance.reduce((s, a) => s + a.rate, 0) / attendance.length) : 0;
+  const overallAbsence = attendance.length
+    ? Math.round(attendance.reduce((s, a) => s + a.absenceRate, 0) / attendance.length)
+    : 0;
 
   return (
     <View style={{ flex: 1 }}>
@@ -122,34 +128,51 @@ export default function Grades() {
             >
               <View>
                 <Text color="rgba(255,255,255,0.85)" variant="label">
-                  {t('grades.attendanceRate')}
+                  {t('grades.absenceRate')}
                 </Text>
                 <Text color="#fff" weight="bold" style={{ fontSize: 40 }}>
-                  {overallRate}%
+                  {overallAbsence}%
                 </Text>
               </View>
               <Ionicons name="people-circle" size={56} color="rgba(255,255,255,0.85)" />
             </LinearGradient>
 
             <View style={{ gap: spacing.sm, marginTop: spacing.lg }}>
-              {attendance.map((a) => (
-                <Card key={a.code}>
-                  <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', alignItems: 'center', gap: spacing.md }}>
-                    <View style={{ flex: 1 }}>
-                      <Text weight="semibold">{pick(a.titleEn, a.titleAr)}</Text>
-                      <Text variant="label" muted style={{ marginTop: 2 }}>
-                        {t('grades.present')} {a.present} · {t('grades.absent')} {a.absent} · {t('grades.late')} {a.late}
-                      </Text>
-                      <View style={{ height: 5, borderRadius: 3, backgroundColor: colors.border, overflow: 'hidden', marginTop: 6 }}>
-                        <View style={{ width: `${a.rate}%`, height: 5, backgroundColor: rateColor(a.rate) }} />
+              {attendance.map((a) => {
+                const denialRisk = a.absenceRate >= DENIAL_THRESHOLD;
+                // Bar fills toward the denial threshold so students see how close they are.
+                const barFill = Math.min(100, Math.round((a.absenceRate / DENIAL_THRESHOLD) * 100));
+                return (
+                  <Card key={a.code}>
+                    <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', alignItems: 'center', gap: spacing.md }}>
+                      <View style={{ flex: 1 }}>
+                        <Text weight="semibold">{pick(a.titleEn, a.titleAr)}</Text>
+                        <Text variant="label" muted style={{ marginTop: 2 }}>
+                          {t('grades.absent')} {a.absent} · {t('grades.late')} {a.late} · {t('grades.present')} {a.present}
+                        </Text>
+                        <View style={{ height: 5, borderRadius: 3, backgroundColor: colors.border, overflow: 'hidden', marginTop: 6 }}>
+                          <View style={{ width: `${barFill}%`, height: 5, backgroundColor: absenceColor(a.absenceRate) }} />
+                        </View>
+                        {denialRisk ? (
+                          <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', alignItems: 'center', gap: 4, marginTop: 6 }}>
+                            <Ionicons name="warning" size={13} color={colors.danger} />
+                            <Text variant="caption" color={colors.danger} weight="semibold">
+                              {t('grades.denied')}
+                            </Text>
+                          </View>
+                        ) : (
+                          <Text variant="caption" muted style={{ marginTop: 6 }}>
+                            {t('grades.denialWarning', { threshold: DENIAL_THRESHOLD })}
+                          </Text>
+                        )}
                       </View>
+                      <Text weight="bold" color={absenceColor(a.absenceRate)}>
+                        {a.absenceRate}%
+                      </Text>
                     </View>
-                    <Text weight="bold" color={rateColor(a.rate)}>
-                      {a.rate}%
-                    </Text>
-                  </View>
-                </Card>
-              ))}
+                  </Card>
+                );
+              })}
             </View>
           </>
         )}

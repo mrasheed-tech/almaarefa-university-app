@@ -46,6 +46,8 @@ export interface MailMessage {
   subjectAr: string;
   previewEn: string;
   previewAr: string;
+  bodyEn: string;
+  bodyAr: string;
   date: string; // ISO
   unread: boolean;
 }

@@ -15,6 +15,7 @@ const TARGETS: Record<string, { url: string; titleKey: string; secure?: boolean 
   moodle: { url: config.moodleUrl, titleKey: 'sections.moodle.title', secure: true },
   webmail: { url: config.webmailUrl, titleKey: 'mail.openWebmail', secure: true },
   courseparse: { url: 'https://www.courseparse.com', titleKey: 'selfStudy.courseparse' },
+  cambridgeone: { url: 'https://www.cambridgeone.org', titleKey: 'selfStudy.cambridgeone' },
 };
 
 export default function WebViewScreen() {

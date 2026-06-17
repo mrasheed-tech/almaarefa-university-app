@@ -63,7 +63,7 @@
     "remindersDue": "التذكيرات",
     "universityNews": "أخبار الجامعة",
     "today": "اليوم",
-    "aroundCampus": "حول الحرم",
+    "aroundCampus": "حول الحرم الجامعي",
     "upcomingEvents": "الفعاليات القادمة",
     "quickLinks": "روابط سريعة",
     "nextShuttle": "الباص القادم",
@@ -150,7 +150,12 @@
     "register": "تسجيل",
     "categoryAll": "الكل",
     "when": "الوقت",
-    "where": "المكان"
+    "where": "المكان",
+    "confirmTitle": "تأكيد الحضور",
+    "confirmMsg": "هل تريد تسجيل حضورك في \"{{title}}\"؟",
+    "cancelTitle": "إلغاء الحضور",
+    "cancelMsg": "هل تريد إلغاء تسجيلك في \"{{title}}\"؟",
+    "cancelYes": "إلغاء التسجيل"
   },
   "shuttle": {
     "routes": "المسارات",
@@ -281,9 +286,12 @@
     "tabGrades": "الدرجات",
     "tabAttendance": "الحضور",
     "attendanceRate": "نسبة الحضور",
+    "absenceRate": "نسبة الغياب",
     "present": "حضور",
     "absent": "غياب",
     "late": "تأخّر",
+    "denialWarning": "الحرمان عند {{threshold}}%",
+    "denied": "خطر الحرمان من الاختبار",
     "sessions": "{{count}} محاضرة",
     "syncedFromPortal": "مُزامن من بوابة الجامعة"
   },
@@ -339,9 +347,10 @@
     "intro": "عزّز تعلّمك بأدوات دراسة ذكية وتدريبات قصيرة على قواعد اللغة الإنجليزية.",
     "toolsTitle": "أدوات الدراسة",
     "courseparse": "CourseParse",
+    "cambridgeone": "Cambridge One",
     "courseparseDesc": "ارفع محاضرة (PDF أو PPT أو DOCX) واحصل فورًا على ملخصات واختبارات وبطاقات تعليمية.",
     "cambridgeDesc": "تدريبات ومصادر تعلّم اللغة الإنجليزية من كامبريدج لجميع المستويات.",
-    "opensExternally": "يفتح CourseParse داخل التطبيق، ويفتح Cambridge One في المتصفح.",
+    "opensExternally": "تفتح الأداتان داخل التطبيق.",
     "grammarTitle": "تدريبات قواعد الإنجليزية"
   },
   "grammar": {

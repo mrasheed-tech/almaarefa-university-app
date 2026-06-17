@@ -150,7 +150,12 @@
     "register": "Register",
     "categoryAll": "All",
     "when": "When",
-    "where": "Where"
+    "where": "Where",
+    "confirmTitle": "Confirm attendance",
+    "confirmMsg": "Register your attendance for \"{{title}}\"?",
+    "cancelTitle": "Cancel attendance",
+    "cancelMsg": "Cancel your registration for \"{{title}}\"?",
+    "cancelYes": "Cancel registration"
   },
   "shuttle": {
     "routes": "Routes",
@@ -281,9 +286,12 @@
     "tabGrades": "Grades",
     "tabAttendance": "Attendance",
     "attendanceRate": "Attendance",
+    "absenceRate": "Absence",
     "present": "Present",
     "absent": "Absent",
     "late": "Late",
+    "denialWarning": "Denial at {{threshold}}%",
+    "denied": "Exam denial risk",
     "sessions": "{{count}} sessions",
     "syncedFromPortal": "Synced from the university Portal"
   },
@@ -339,9 +347,10 @@
     "intro": "Boost your learning with smart study tools and bite-size English grammar practice.",
     "toolsTitle": "Study tools",
     "courseparse": "CourseParse",
+    "cambridgeone": "Cambridge One",
     "courseparseDesc": "Upload a lecture (PDF, PPT, or DOCX) and get instant summaries, quizzes, and flashcards.",
     "cambridgeDesc": "Cambridge English practice and learning resources for every level.",
-    "opensExternally": "CourseParse opens inside the app; Cambridge One opens in your browser.",
+    "opensExternally": "Both tools open inside the app.",
     "grammarTitle": "English grammar practice"
   },
   "grammar": {

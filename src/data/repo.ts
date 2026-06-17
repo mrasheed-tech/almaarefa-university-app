@@ -60,6 +60,9 @@ const mapMail = (r: any): MailMessage => ({
   subjectAr: s(r.subject_ar),
   previewEn: s(r.preview_en),
   previewAr: s(r.preview_ar),
+  // Full body columns are optional; fall back to the preview if not present.
+  bodyEn: s(r.body_en) || s(r.preview_en),
+  bodyAr: s(r.body_ar) || s(r.preview_ar),
   date: r.sent_at,
   unread: r.unread,
 });

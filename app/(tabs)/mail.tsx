@@ -40,6 +40,7 @@ export default function Mail() {
               onPress={() => {
                 setReadIds((ids) => (ids.includes(m.id) ? ids : [...ids, m.id]));
                 if (m.unread) markMailRead(m.id);
+                router.push(`/section/mail/${m.id}` as never);
               }}
               style={{
                 flexDirection: isRTL ? 'row-reverse' : 'row',
