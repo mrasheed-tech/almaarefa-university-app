@@ -157,7 +157,38 @@ const logoW = bookMaxX - minX + 1;
 const logoH = maxY - minY + 1;
 console.log(`Book symbol: x=${minX}..${bookMaxX} (${logoW}px wide), y=${minY}..${maxY} (${logoH}px tall)`);
 
-// Fresh teal canvas, logo recentred.
+// Scale the book up to fill ~65% of the canvas width.
+const TARGET_FILL = 0.65;
+const scale = (w * TARGET_FILL) / logoW;
+const scaledW = Math.round(logoW * scale);
+const scaledH = Math.round(logoH * scale);
+
+// Bilinear scale: for each destination pixel find the source position.
+const scaled = Buffer.alloc(scaledW * scaledH * 4);
+for (let dy = 0; dy < scaledH; dy++) {
+  for (let dx = 0; dx < scaledW; dx++) {
+    const sx = dx / scale;
+    const sy = dy / scale;
+    const sx0 = Math.floor(sx), sy0 = Math.floor(sy);
+    const sx1 = Math.min(sx0 + 1, logoW - 1), sy1 = Math.min(sy0 + 1, logoH - 1);
+    const fx = sx - sx0, fy = sy - sy0;
+    const si00 = ((minY + sy0) * w + (minX + sx0)) * 4;
+    const si10 = ((minY + sy0) * w + (minX + sx1)) * 4;
+    const si01 = ((minY + sy1) * w + (minX + sx0)) * 4;
+    const si11 = ((minY + sy1) * w + (minX + sx1)) * 4;
+    const di = (dy * scaledW + dx) * 4;
+    for (let c = 0; c < 4; c++) {
+      scaled[di + c] = Math.round(
+        px[si00 + c] * (1 - fx) * (1 - fy) +
+        px[si10 + c] * fx * (1 - fy) +
+        px[si01 + c] * (1 - fx) * fy +
+        px[si11 + c] * fx * fy
+      );
+    }
+  }
+}
+
+// Fresh teal canvas, scaled book centred.
 const out = Buffer.alloc(w * h * 4);
 for (let i = 0; i < w * h; i++) {
   out[i * 4] = TEAL[0];
@@ -165,19 +196,21 @@ for (let i = 0; i < w * h; i++) {
   out[i * 4 + 2] = TEAL[2];
   out[i * 4 + 3] = 255;
 }
-const destX = Math.round((w - logoW) / 2);
-const destY = Math.round((h - logoH) / 2);
-for (let y = 0; y < logoH; y++) {
-  for (let x = 0; x < logoW; x++) {
-    const si = ((minY + y) * w + (minX + x)) * 4;
-    if (!isLogo(si)) continue;
-    const di = ((destY + y) * w + (destX + x)) * 4;
-    out[di] = px[si];
-    out[di + 1] = px[si + 1];
-    out[di + 2] = px[si + 2];
+const destX = Math.round((w - scaledW) / 2);
+const destY = Math.round((h - scaledH) / 2);
+for (let dy = 0; dy < scaledH; dy++) {
+  for (let dx = 0; dx < scaledW; dx++) {
+    const si = (dy * scaledW + dx) * 4;
+    // Skip pixels that are close to the teal background (not part of the book).
+    const r = scaled[si], g = scaled[si + 1], b = scaled[si + 2];
+    if (Math.abs(r - TEAL[0]) + Math.abs(g - TEAL[1]) + Math.abs(b - TEAL[2]) <= 60) continue;
+    const di = ((destY + dy) * w + (destX + dx)) * 4;
+    out[di] = r;
+    out[di + 1] = g;
+    out[di + 2] = b;
     out[di + 3] = 255;
   }
 }
 
 fs.writeFileSync(OUT_ICON, encodeRGBA(w, h, out));
-console.log(`Wrote assets/icon.png — logo ${logoW}x${logoH} recentred on ${w}x${h} teal.`);
+console.log(`Wrote assets/icon.png — book scaled ${scaledW}x${scaledH} (${Math.round(scale * 100)}%) centred on ${w}x${h} teal.`);
