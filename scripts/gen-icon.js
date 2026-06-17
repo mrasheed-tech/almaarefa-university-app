@@ -117,6 +117,19 @@ const isLogo = (i) => {
   return Math.abs(r - TEAL[0]) + Math.abs(g - TEAL[1]) + Math.abs(b - TEAL[2]) > 60;
 };
 
+// Detect the column split between the book symbol and the text label.
+// We scan column density from left; the first sustained gap after x=300
+// marks where the text begins. We use only the book portion for the icon.
+function findBookRight(scanW, scanH, fullW) {
+  for (let x = scanW; x > 200; x--) {
+    let col = 0;
+    for (let y = 0; y < scanH; y++) col += isLogo((y * fullW + x) * 4) ? 1 : 0;
+    if (col > 5) return x; // rightmost column with meaningful density
+  }
+  return Math.round(scanW * 0.4); // fallback
+}
+
+// First find full logo bounds.
 let minX = w, minY = h, maxX = 0, maxY = 0, found = false;
 for (let y = 0; y < h; y++) {
   for (let x = 0; x < w; x++) {
@@ -131,8 +144,18 @@ for (let y = 0; y < h; y++) {
 }
 if (!found) throw new Error('could not locate logo in source');
 
-const logoW = maxX - minX + 1;
+// Scan for the gap that separates book icon (~left 40%) from Arabic/English text.
+// We look for a vertical strip with near-zero density between x=300 and x=500.
+let bookMaxX = maxX;
+for (let x = minX + Math.round((maxX - minX) * 0.25); x < minX + Math.round((maxX - minX) * 0.6); x++) {
+  let col = 0;
+  for (let y = minY; y <= maxY; y++) col += isLogo((y * w + x) * 4) ? 1 : 0;
+  if (col === 0) { bookMaxX = x - 1; break; }
+}
+
+const logoW = bookMaxX - minX + 1;
 const logoH = maxY - minY + 1;
+console.log(`Book symbol: x=${minX}..${bookMaxX} (${logoW}px wide), y=${minY}..${maxY} (${logoH}px tall)`);
 
 // Fresh teal canvas, logo recentred.
 const out = Buffer.alloc(w * h * 4);

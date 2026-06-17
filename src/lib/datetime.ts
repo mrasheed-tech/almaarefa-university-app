@@ -9,11 +9,15 @@ export function fmtTime(iso: string, lang: Lang): string {
 }
 
 export function fmtDate(iso: string, lang: Lang): string {
-  return format(new Date(iso), 'EEE, d MMM', { locale: localeFor(lang) });
+  // Arabic: use full day name (EEEE) to get الأحد/الاثنين/… with ال prefix.
+  // No comma — Arabic punctuation norms don't use it between day and date.
+  if (lang === 'ar') return format(new Date(iso), 'EEEE d MMM', { locale: ar });
+  return format(new Date(iso), 'EEE, d MMM', { locale: enUS });
 }
 
 export function fmtDateTime(iso: string, lang: Lang): string {
-  return format(new Date(iso), 'EEE, d MMM · h:mm a', { locale: localeFor(lang) });
+  if (lang === 'ar') return format(new Date(iso), 'EEEE d MMM · h:mm a', { locale: ar });
+  return format(new Date(iso), 'EEE, d MMM · h:mm a', { locale: enUS });
 }
 
 /** Today / Tomorrow / formatted date. `t` provides the localized today/tomorrow words. */

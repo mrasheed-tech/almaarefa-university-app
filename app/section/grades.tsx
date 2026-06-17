@@ -15,13 +15,18 @@ function gradeColor(points: number): string {
   return colors.danger;
 }
 
-// Absence is what students watch: in Saudi universities, crossing the denial
-// threshold (typically 25%) bars you from the final exam (حرمان).
+// Saudi universities issue two warnings before exam denial:
+//   إنذار أول  at 10%  (first warning)
+//   إنذار ثاني at 20%  (second warning)
+//   حرمان      at 25%  (exam denial)
+const WARNING_1 = 10;
+const WARNING_2 = 20;
 const DENIAL_THRESHOLD = 25;
 
 function absenceColor(rate: number): string {
   if (rate >= DENIAL_THRESHOLD) return colors.danger;
-  if (rate >= 15) return colors.warning;
+  if (rate >= WARNING_2) return '#E07000'; // deep orange for second warning
+  if (rate >= WARNING_1) return colors.warning;
   return colors.success;
 }
 
@@ -139,9 +144,16 @@ export default function Grades() {
 
             <View style={{ gap: spacing.sm, marginTop: spacing.lg }}>
               {attendance.map((a) => {
-                const denialRisk = a.absenceRate >= DENIAL_THRESHOLD;
-                // Bar fills toward the denial threshold so students see how close they are.
                 const barFill = Math.min(100, Math.round((a.absenceRate / DENIAL_THRESHOLD) * 100));
+                const warningColor = absenceColor(a.absenceRate);
+                const warningLabel =
+                  a.absenceRate >= DENIAL_THRESHOLD
+                    ? { icon: 'warning' as const, text: t('grades.denied'), color: colors.danger }
+                    : a.absenceRate >= WARNING_2
+                    ? { icon: 'alert-circle' as const, text: pick('Second warning', 'إنذار ثاني'), color: '#E07000' }
+                    : a.absenceRate >= WARNING_1
+                    ? { icon: 'alert-circle-outline' as const, text: pick('First warning', 'إنذار أول'), color: colors.warning }
+                    : null;
                 return (
                   <Card key={a.code}>
                     <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', alignItems: 'center', gap: spacing.md }}>
@@ -151,13 +163,13 @@ export default function Grades() {
                           {t('grades.absent')} {a.absent} · {t('grades.late')} {a.late} · {t('grades.present')} {a.present}
                         </Text>
                         <View style={{ height: 5, borderRadius: 3, backgroundColor: colors.border, overflow: 'hidden', marginTop: 6 }}>
-                          <View style={{ width: `${barFill}%`, height: 5, backgroundColor: absenceColor(a.absenceRate) }} />
+                          <View style={{ width: `${barFill}%`, height: 5, backgroundColor: warningColor }} />
                         </View>
-                        {denialRisk ? (
+                        {warningLabel ? (
                           <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', alignItems: 'center', gap: 4, marginTop: 6 }}>
-                            <Ionicons name="warning" size={13} color={colors.danger} />
-                            <Text variant="caption" color={colors.danger} weight="semibold">
-                              {t('grades.denied')}
+                            <Ionicons name={warningLabel.icon} size={13} color={warningLabel.color} />
+                            <Text variant="caption" color={warningLabel.color} weight="semibold">
+                              {warningLabel.text}
                             </Text>
                           </View>
                         ) : (

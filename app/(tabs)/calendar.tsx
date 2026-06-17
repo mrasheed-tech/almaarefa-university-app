@@ -14,13 +14,13 @@ import type { Appointment, CampusEvent, ClassSession, Invigilation, Reminder } f
 
 const WEEK_DAYS = [0, 1, 2, 3, 4]; // Sun–Thu (KSA academic week)
 const WEEKDAY_LABELS = [
-  { en: 'Sun', ar: 'أحد' },
-  { en: 'Mon', ar: 'إثنين' },
-  { en: 'Tue', ar: 'ثلاثاء' },
-  { en: 'Wed', ar: 'أربعاء' },
-  { en: 'Thu', ar: 'خميس' },
-  { en: 'Fri', ar: 'جمعة' },
-  { en: 'Sat', ar: 'سبت' },
+  { en: 'Sun', ar: 'الأحد' },
+  { en: 'Mon', ar: 'الاثنين' },
+  { en: 'Tue', ar: 'الثلاثاء' },
+  { en: 'Wed', ar: 'الأربعاء' },
+  { en: 'Thu', ar: 'الخميس' },
+  { en: 'Fri', ar: 'الجمعة' },
+  { en: 'Sat', ar: 'السبت' },
 ];
 type Mode = 'month' | 'week' | 'day' | 'duties';
 
