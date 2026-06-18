@@ -65,7 +65,7 @@ export default function TabsLayout() {
         options={{
           title: t('tabs.more'),
           tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons name={focused ? 'menu' : 'menu-outline'} size={size} color={color} />
+            <Ionicons name={focused ? 'person' : 'person-outline'} size={size} color={color} />
           ),
         }}
       />
