@@ -11,6 +11,8 @@ export { SectionHeader } from './SectionHeader';
 export { EmptyState } from './EmptyState';
 export { SegmentedControl } from './SegmentedControl';
 export { IconTile } from './IconTile';
+export { AppIcon } from './AppIcon';
+export type { AppIconName } from './AppIcon';
 export { TextField } from './TextField';
 export { DateTimeField } from './DateTimeField';
 export { Chip } from './Chip';

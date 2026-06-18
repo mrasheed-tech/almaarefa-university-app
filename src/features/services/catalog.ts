@@ -1,5 +1,5 @@
-import { Ionicons } from '@expo/vector-icons';
 import { palette } from '@/theme';
+import type { AppIconName } from '@/components';
 import type { Role } from '@/data/types';
 
 export type ServiceGroup = 'academic' | 'campus' | 'support';
@@ -7,7 +7,7 @@ export type ServiceGroup = 'academic' | 'campus' | 'support';
 export interface ServiceDef {
   /** i18n key under `sections.<key>` for title/subtitle. */
   key: string;
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: AppIconName;
   color: string;
   bg: string;
   route: string;
@@ -47,7 +47,7 @@ export const SERVICES: ServiceDef[] = [
   { key: 'directory', icon: 'people', ...tint.slate, route: '/section/directory', group: 'campus' },
   { key: 'news', icon: 'newspaper', ...tint.teal, route: '/section/news', group: 'campus' },
   { key: 'id', icon: 'card', ...tint.purple, route: '/section/id', group: 'campus' },
-  { key: 'prayer', icon: 'moon', ...tint.green, route: '/section/prayer', group: 'campus' },
+  { key: 'prayer', icon: 'kaaba', ...tint.green, route: '/section/prayer', group: 'campus' },
 
   // Support
   { key: 'reminders', icon: 'alarm', ...tint.gold, route: '/section/reminders', group: 'support' },

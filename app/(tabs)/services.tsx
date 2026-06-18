@@ -1,7 +1,7 @@
 import { Pressable, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Card, Header, Screen, Text } from '@/components';
+import { AppIcon, Card, Header, Screen, Text } from '@/components';
 import { useAuth } from '@/lib/auth';
 import { useLang } from '@/hooks/useLang';
 import { servicesByGroup, type ServiceGroup } from '@/features/services/catalog';
@@ -51,7 +51,7 @@ export default function Services() {
                       pressed && { backgroundColor: colors.surfaceAlt },
                     ]}
                   >
-                    <Ionicons name={s.icon} size={21} color={colors.textSecondary} />
+                    <AppIcon name={s.icon} size={21} color={colors.textSecondary} />
                     <Text style={{ flex: 1 }}>{t(`sections.${s.key}.title`)}</Text>
                     <Ionicons name={chevron} size={16} color={colors.textMuted} />
                   </Pressable>

@@ -3,7 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { Avatar, Badge, Card, IconTile, SectionHeader, Text } from '@/components';
+import { type AppIconName, Avatar, Badge, Card, IconTile, SectionHeader, Text } from '@/components';
 import { useAuth } from '@/lib/auth';
 import { useLang } from '@/hooks/useLang';
 import { colors, gradients, radius, spacing } from '@/theme';
@@ -21,7 +21,7 @@ import { fmtDate, todayWeekday } from '@/lib/datetime';
 
 type Tile = {
   key: string;
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: AppIconName;
   route: string;
   count?: number;
 };
@@ -65,7 +65,7 @@ export default function Home() {
       { key: 'events', icon: 'sparkles', route: '/section/events', count: upcomingEvents },
       { key: 'id', icon: 'card', route: '/section/id' },
       { key: 'moodle', icon: 'book', route: '/webview/moodle' },
-      { key: 'prayer', icon: 'moon', route: '/section/prayer' },
+      { key: 'prayer', icon: 'kaaba', route: '/section/prayer' },
       { key: 'shuttle', icon: 'bus', route: '/section/shuttle' },
       { key: 'food', icon: 'restaurant', route: '/section/food' },
       { key: 'directory', icon: 'people', route: '/section/directory' },
@@ -79,7 +79,7 @@ export default function Home() {
       { key: 'mail', icon: 'mail', route: '/(tabs)/mail', count: unreadMail },
       { key: 'id', icon: 'card', route: '/section/id' },
       { key: 'moodle', icon: 'book', route: '/webview/moodle' },
-      { key: 'prayer', icon: 'moon', route: '/section/prayer' },
+      { key: 'prayer', icon: 'kaaba', route: '/section/prayer' },
       { key: 'shuttle', icon: 'bus', route: '/section/shuttle' },
       { key: 'directory', icon: 'people', route: '/section/directory' },
       { key: 'news', icon: 'newspaper', route: '/section/news', count: newNews },
@@ -91,7 +91,7 @@ export default function Home() {
       { key: 'mail', icon: 'mail', route: '/(tabs)/mail', count: unreadMail },
       { key: 'calendar', icon: 'calendar', route: '/(tabs)/calendar', count: todaysClasses },
       { key: 'id', icon: 'card', route: '/section/id' },
-      { key: 'prayer', icon: 'moon', route: '/section/prayer' },
+      { key: 'prayer', icon: 'kaaba', route: '/section/prayer' },
       { key: 'directory', icon: 'people', route: '/section/directory' },
       { key: 'news', icon: 'newspaper', route: '/section/news', count: newNews },
       { key: 'services', icon: 'grid', route: '/(tabs)/services' },
@@ -102,7 +102,7 @@ export default function Home() {
       { key: 'excuses', icon: 'document-attach', route: '/section/excuses-review', count: pending },
       { key: 'mail', icon: 'mail', route: '/(tabs)/mail', count: unreadMail },
       { key: 'id', icon: 'card', route: '/section/id' },
-      { key: 'prayer', icon: 'moon', route: '/section/prayer' },
+      { key: 'prayer', icon: 'kaaba', route: '/section/prayer' },
       { key: 'directory', icon: 'people', route: '/section/directory' },
       { key: 'news', icon: 'newspaper', route: '/section/news', count: newNews },
       { key: 'services', icon: 'grid', route: '/(tabs)/services' },
@@ -113,7 +113,7 @@ export default function Home() {
       { key: 'orders', icon: 'receipt', route: '/section/orders' },
       { key: 'mail', icon: 'mail', route: '/(tabs)/mail', count: unreadMail },
       { key: 'id', icon: 'card', route: '/section/id' },
-      { key: 'prayer', icon: 'moon', route: '/section/prayer' },
+      { key: 'prayer', icon: 'kaaba', route: '/section/prayer' },
       { key: 'services', icon: 'grid', route: '/(tabs)/services' },
     );
   } else {

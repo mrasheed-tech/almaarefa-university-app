@@ -1,10 +1,10 @@
 import { Pressable, View, type DimensionValue } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { AppIcon, type AppIconName } from './AppIcon';
 import { Text } from './Text';
 import { colors, radius } from '@/theme';
 
 interface Props {
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: AppIconName;
   label: string;
   color?: string;
   bg?: string;
@@ -26,7 +26,7 @@ export function IconTile({ icon, label, color = colors.primary, bg = colors.prim
           justifyContent: 'center',
         }}
       >
-        <Ionicons name={icon} size={25} color={color} />
+        <AppIcon name={icon} size={25} color={color} />
         {count && count > 0 ? (
           <View
             style={{
