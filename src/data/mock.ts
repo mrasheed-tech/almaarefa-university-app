@@ -37,10 +37,10 @@ export const demoUsers: Record<Role, User> = {
   student: {
     id: 'u-student',
     universityId: '4210234',
-    nameEn: 'Ahmed Al-Otaibi',
-    nameAr: 'أحمد العتيبي',
+    nameEn: 'Sara Al-Otaibi',
+    nameAr: 'سارة العتيبي',
     role: 'student',
-    email: 'ahmed.alotaibi@um.edu.sa',
+    email: 'sara.alotaibi@um.edu.sa',
     programEn: 'Doctor of Medicine (MBBS)',
     programAr: 'بكالوريوس الطب والجراحة',
     department: 'College of Medicine',
@@ -185,7 +185,7 @@ export const researchItems: ResearchItem[] = [
 
 /* --------------------------- excuses (affairs) --------------------------- */
 export const excuses: Excuse[] = [
-  { id: 'x1', studentId: '4210234', studentNameEn: 'Ahmed Al-Otaibi', studentNameAr: 'أحمد العتيبي', type: 'sick', note: 'Influenza, advised 3 days rest', fromDate: inDays(-2), toDate: inDays(0), status: 'pending', hasAttachment: true, submittedAt: hoursFromNow(-26) },
+  { id: 'x1', studentId: '4210234', studentNameEn: 'Sara Al-Otaibi', studentNameAr: 'سارة العتيبي', type: 'sick', note: 'Influenza, advised 3 days rest', fromDate: inDays(-2), toDate: inDays(0), status: 'pending', hasAttachment: true, submittedAt: hoursFromNow(-26) },
   { id: 'x2', studentId: '4210871', studentNameEn: 'Mohammed Al-Ghamdi', studentNameAr: 'محمد الغامدي', type: 'official', note: 'Representing university at sports event', fromDate: inDays(-5), toDate: inDays(-4), status: 'approved', hasAttachment: true, submittedAt: inDays(-6) },
   { id: 'x3', studentId: '4211002', studentNameEn: 'Lama Al-Shehri', studentNameAr: 'لمى الشهري', type: 'bereavement', note: 'Family bereavement', fromDate: inDays(-7), toDate: inDays(-5), status: 'rejected', hasAttachment: false, submittedAt: inDays(-7) },
 ];
@@ -201,7 +201,7 @@ export const invigilations: Invigilation[] = [
 
 /* ------------------------------- advisees -------------------------------- */
 export const advisees: Advisee[] = [
-  { id: 'ad1', nameEn: 'Ahmed Al-Otaibi', nameAr: 'أحمد العتيبي', universityId: '4210234', programEn: 'Medicine', programAr: 'الطب', gpa: 4.62, status: 'good' },
+  { id: 'ad1', nameEn: 'Sara Al-Otaibi', nameAr: 'سارة العتيبي', universityId: '4210234', programEn: 'Medicine', programAr: 'الطب', gpa: 4.62, status: 'good' },
   { id: 'ad2', nameEn: 'Mohammed Al-Ghamdi', nameAr: 'محمد الغامدي', universityId: '4210871', programEn: 'Medicine', programAr: 'الطب', gpa: 3.1, status: 'warning' },
   { id: 'ad3', nameEn: 'Lama Al-Shehri', nameAr: 'لمى الشهري', universityId: '4211002', programEn: 'Nursing', programAr: 'التمريض', gpa: 2.3, status: 'probation' },
   { id: 'ad4', nameEn: 'Abdullah Al-Mutairi', nameAr: 'عبدالله المطيري', universityId: '4210559', programEn: 'Pharmacy', programAr: 'الصيدلة', gpa: 4.1, status: 'good' },
@@ -225,7 +225,7 @@ export const conversations: Conversation[] = [
     lastAt: hoursFromNow(-3),
     unread: 1,
     messages: [
-      thread(false, 'Hello Ahmed, did you submit the anatomy report?', 6),
+      thread(false, 'Hello Sara, did you submit the anatomy report?', 6),
       thread(true, 'Not yet doctor, I will submit it tonight.', 5),
       thread(false, 'See you in tomorrow\'s lab.', 3),
     ],
