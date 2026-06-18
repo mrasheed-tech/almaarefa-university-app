@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, View, ViewStyle } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -12,21 +12,24 @@ import {
   getEvents,
   getExcusesQueue,
   getInvigilations,
+  getMail,
   getNotices,
   getReminders,
   getScheduleFor,
-  getShuttleRoutes,
 } from '@/data';
-import { fmtDate, fmtTime, relativeDay, todayWeekday } from '@/lib/datetime';
+import { fmtDate, todayWeekday } from '@/lib/datetime';
 
-function nextShuttleTime(times: string[]): string {
-  const now = new Date();
-  const mins = now.getHours() * 60 + now.getMinutes();
-  for (const tt of times) {
-    const [h, m] = tt.split(':').map(Number);
-    if (h * 60 + m >= mins) return tt;
-  }
-  return times[0];
+type Tile = {
+  key: string;
+  icon: keyof typeof Ionicons.glyphMap;
+  route: string;
+  count?: number;
+};
+
+/** Notices posted within the last week count as "new". */
+function recentCount<T extends { date: string }>(items: T[], days = 7): number {
+  const cutoff = Date.now() - days * 86_400_000;
+  return items.filter((n) => new Date(n.date).getTime() >= cutoff).length;
 }
 
 export default function Home() {
@@ -40,42 +43,87 @@ export default function Home() {
   const firstName = pick(user.nameEn, user.nameAr).split(' ').slice(0, 2).join(' ');
   const hour = new Date().getHours();
   const greetKey = hour < 12 ? 'home.greetingMorning' : hour < 18 ? 'home.greetingAfternoon' : 'home.greetingEvening';
-  const chevron = isRTL ? 'chevron-back' : 'chevron-forward';
+
+  // ---- live counts for the notification badges -------------------------
+  const todaysClasses = getScheduleFor(role).filter((c) => c.day === todayWeekday()).length;
+  const dueReminders = getReminders().filter((r) => !r.done).length;
+  const unreadMail = getMail().filter((m) => m.unread).length;
+  const upcomingEvents = getEvents().filter((e) => new Date(e.start).getTime() >= Date.now()).length;
+  const newNews = recentCount(getNotices());
 
   const news = getNotices();
   const featured = news[0];
-  const moreNews = news.slice(1, 3);
-  const todays = getScheduleFor(role)
-    .filter((c) => c.day === todayWeekday())
-    .sort((a, b) => a.start.localeCompare(b.start));
-  const activeReminders = getReminders().filter((r) => !r.done).slice(0, 3);
-  const shuttle = getShuttleRoutes()[0];
-  const nextEvent = getEvents()[0];
-  const showSchedule = role === 'student' || role === 'teacher';
 
-  const quickLinks = [
-    { icon: 'book' as const, label: t('home.openMoodle'), route: '/webview/moodle' },
-    { icon: 'card' as const, label: t('home.digitalId'), route: '/section/id' },
-    { icon: 'grid' as const, label: t('home.more'), route: '/(tabs)/services' },
-  ];
-
-  const row = (top: boolean): ViewStyle => ({
-    flexDirection: isRTL ? 'row-reverse' : 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-    paddingVertical: spacing.sm + 2,
-    paddingHorizontal: spacing.md,
-    borderTopWidth: top ? 1 : 0,
-    borderTopColor: colors.divider,
-  });
-  const tile: ViewStyle = {
-    width: 40,
-    height: 40,
-    borderRadius: radius.md,
-    backgroundColor: '#ECEFF3',
-    alignItems: 'center',
-    justifyContent: 'center',
-  };
+  // ---- role-aware shortcut grid ----------------------------------------
+  const tiles: Tile[] = [];
+  if (role === 'student') {
+    tiles.push(
+      { key: 'calendar', icon: 'calendar', route: '/(tabs)/calendar', count: todaysClasses },
+      { key: 'reminders', icon: 'alarm', route: '/section/reminders', count: dueReminders },
+      { key: 'mail', icon: 'mail', route: '/(tabs)/mail', count: unreadMail },
+      { key: 'grades', icon: 'school', route: '/section/grades' },
+      { key: 'events', icon: 'sparkles', route: '/section/events', count: upcomingEvents },
+      { key: 'id', icon: 'card', route: '/section/id' },
+      { key: 'moodle', icon: 'book', route: '/webview/moodle' },
+      { key: 'prayer', icon: 'moon', route: '/section/prayer' },
+      { key: 'shuttle', icon: 'bus', route: '/section/shuttle' },
+      { key: 'food', icon: 'restaurant', route: '/section/food' },
+      { key: 'directory', icon: 'people', route: '/section/directory' },
+      { key: 'news', icon: 'newspaper', route: '/section/news', count: newNews },
+    );
+  } else if (role === 'teacher') {
+    const upcomingDuty = getInvigilations().filter((i) => new Date(i.date).getTime() >= Date.now()).length;
+    tiles.push(
+      { key: 'calendar', icon: 'calendar', route: '/(tabs)/calendar', count: todaysClasses },
+      { key: 'invigilation', icon: 'clipboard', route: '/section/invigilation', count: upcomingDuty },
+      { key: 'mail', icon: 'mail', route: '/(tabs)/mail', count: unreadMail },
+      { key: 'id', icon: 'card', route: '/section/id' },
+      { key: 'moodle', icon: 'book', route: '/webview/moodle' },
+      { key: 'prayer', icon: 'moon', route: '/section/prayer' },
+      { key: 'shuttle', icon: 'bus', route: '/section/shuttle' },
+      { key: 'directory', icon: 'people', route: '/section/directory' },
+      { key: 'news', icon: 'newspaper', route: '/section/news', count: newNews },
+    );
+  } else if (role === 'advisor') {
+    const atRisk = getAdvisees().filter((a) => a.status !== 'good').length;
+    tiles.push(
+      { key: 'advisees', icon: 'compass', route: '/section/notices', count: atRisk },
+      { key: 'mail', icon: 'mail', route: '/(tabs)/mail', count: unreadMail },
+      { key: 'calendar', icon: 'calendar', route: '/(tabs)/calendar', count: todaysClasses },
+      { key: 'id', icon: 'card', route: '/section/id' },
+      { key: 'prayer', icon: 'moon', route: '/section/prayer' },
+      { key: 'directory', icon: 'people', route: '/section/directory' },
+      { key: 'news', icon: 'newspaper', route: '/section/news', count: newNews },
+      { key: 'services', icon: 'grid', route: '/(tabs)/services' },
+    );
+  } else if (role === 'student_affairs') {
+    const pending = getExcusesQueue().filter((e) => e.status === 'pending').length;
+    tiles.push(
+      { key: 'excuses', icon: 'document-attach', route: '/section/excuses-review', count: pending },
+      { key: 'mail', icon: 'mail', route: '/(tabs)/mail', count: unreadMail },
+      { key: 'id', icon: 'card', route: '/section/id' },
+      { key: 'prayer', icon: 'moon', route: '/section/prayer' },
+      { key: 'directory', icon: 'people', route: '/section/directory' },
+      { key: 'news', icon: 'newspaper', route: '/section/news', count: newNews },
+      { key: 'services', icon: 'grid', route: '/(tabs)/services' },
+    );
+  } else if (role === 'vendor') {
+    tiles.push(
+      { key: 'food', icon: 'restaurant', route: '/section/food' },
+      { key: 'orders', icon: 'receipt', route: '/section/orders' },
+      { key: 'mail', icon: 'mail', route: '/(tabs)/mail', count: unreadMail },
+      { key: 'id', icon: 'card', route: '/section/id' },
+      { key: 'prayer', icon: 'moon', route: '/section/prayer' },
+      { key: 'services', icon: 'grid', route: '/(tabs)/services' },
+    );
+  } else {
+    tiles.push(
+      { key: 'mail', icon: 'mail', route: '/(tabs)/mail', count: unreadMail },
+      { key: 'directory', icon: 'people', route: '/section/directory' },
+      { key: 'news', icon: 'newspaper', route: '/section/news', count: newNews },
+      { key: 'services', icon: 'grid', route: '/(tabs)/services' },
+    );
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -102,224 +150,62 @@ export default function Home() {
         </LinearGradient>
 
         <View style={{ paddingHorizontal: spacing.lg, paddingTop: spacing.lg }}>
-          {/* University news — first thing on the page */}
-          <SectionHeader title={t('home.universityNews')} actionLabel={t('common.seeAll')} onAction={() => router.push('/section/news')} />
-          {featured ? (
-            <Card onPress={() => router.push('/section/news')}>
-              <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', gap: spacing.md }}>
-                <View style={tile}>
-                  <Ionicons name="newspaper" size={21} color={colors.textSecondary} />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text weight="bold" numberOfLines={2}>
-                    {pick(featured.titleEn, featured.titleAr)}
-                  </Text>
-                  <Text variant="label" muted numberOfLines={2} style={{ marginTop: 2 }}>
-                    {pick(featured.bodyEn, featured.bodyAr)}
-                  </Text>
-                  <Text variant="caption" muted style={{ marginTop: 4 }}>
-                    {fmtDate(featured.date, lang)}
-                  </Text>
-                </View>
-              </View>
-            </Card>
-          ) : null}
-          {moreNews.length ? (
-            <Card padded={false} style={{ marginTop: spacing.sm }}>
-              {moreNews.map((n, i) => (
-                <Pressable
-                  key={n.id}
-                  onPress={() => router.push('/section/news')}
-                  style={({ pressed }) => [row(i > 0), pressed && { backgroundColor: colors.surfaceAlt }]}
-                >
-                  <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: colors.primary }} />
-                  <Text style={{ flex: 1 }} numberOfLines={1}>
-                    {pick(n.titleEn, n.titleAr)}
-                  </Text>
-                  <Text variant="caption" muted>
-                    {fmtDate(n.date, lang)}
-                  </Text>
-                </Pressable>
+          {/* Shortcut grid — icon-first, with notification badges */}
+          <SectionHeader title={t('home.shortcuts')} />
+          <Card>
+            <View
+              style={{
+                flexDirection: isRTL ? 'row-reverse' : 'row',
+                flexWrap: 'wrap',
+                rowGap: spacing.md,
+                justifyContent: 'space-between',
+              }}
+            >
+              {tiles.map((tile) => (
+                <IconTile
+                  key={tile.key}
+                  icon={tile.icon}
+                  label={t(`home.grid.${tile.key}`)}
+                  count={tile.count}
+                  width="25%"
+                  onPress={() => router.push(tile.route as never)}
+                />
               ))}
-            </Card>
-          ) : null}
+            </View>
+          </Card>
 
-          <RoleSpotlight role={role} />
-
-          {/* Quick links */}
-          <View style={{ marginTop: spacing.lg }}>
-            <Card>
-              <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', justifyContent: 'space-between' }}>
-                {quickLinks.map((q) => (
-                  <IconTile key={q.label} icon={q.icon} label={q.label} color={colors.textSecondary} bg="#ECEFF3" width={64} onPress={() => router.push(q.route as never)} />
-                ))}
-              </View>
-            </Card>
-          </View>
-
-          {/* Today: schedule + reminders combined */}
-          {showSchedule ? (
+          {/* University news — kept as one compact featured card */}
+          {featured ? (
             <>
-              <SectionHeader title={t('home.today')} actionLabel={t('common.seeAll')} onAction={() => router.push('/(tabs)/calendar')} />
-              <Card padded={false}>
-                {todays.length === 0 ? (
-                  <Text muted center style={{ paddingVertical: spacing.md }}>
-                    {role === 'teacher' ? t('home.noDutyToday') : t('home.noClassesToday')}
-                  </Text>
-                ) : (
-                  todays.map((c, i) => (
-                    <View key={c.id} style={row(i > 0)}>
-                      <View style={{ width: 4, height: 36, borderRadius: 2, backgroundColor: c.color }} />
-                      <View style={{ flex: 1 }}>
-                        <Text weight="semibold" numberOfLines={1}>
-                          {pick(c.titleEn, c.titleAr)}
-                        </Text>
-                        <Text variant="label" muted>
-                          {c.courseCode} · {t('calendar.room')} {c.room}
-                        </Text>
-                      </View>
-                      <Text variant="label" weight="semibold" color={colors.textSecondary}>
-                        {c.start}
-                      </Text>
-                    </View>
-                  ))
-                )}
-                {activeReminders.length ? (
-                  <View style={{ borderTopWidth: 1, borderTopColor: colors.divider, paddingTop: spacing.sm }}>
-                    <Text variant="caption" weight="semibold" muted style={{ paddingHorizontal: spacing.md, textAlign: isRTL ? 'right' : 'left' }}>
-                      {t('home.remindersDue')}
-                    </Text>
-                    {activeReminders.map((r) => (
-                      <Pressable
-                        key={r.id}
-                        onPress={() => router.push('/section/reminders')}
-                        style={({ pressed }) => [
-                          { flexDirection: isRTL ? 'row-reverse' : 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.sm, paddingHorizontal: spacing.md },
-                          pressed && { backgroundColor: colors.surfaceAlt },
-                        ]}
-                      >
-                        <Ionicons name="ellipse-outline" size={18} color={colors.primary} />
-                        <Text style={{ flex: 1 }} numberOfLines={1}>
-                          {r.title}
-                        </Text>
-                        <Text variant="caption" muted>
-                          {relativeDay(r.dueAt, lang, t)}
-                        </Text>
-                      </Pressable>
-                    ))}
+              <SectionHeader title={t('home.universityNews')} actionLabel={t('common.seeAll')} onAction={() => router.push('/section/news')} />
+              <Card onPress={() => router.push('/section/news')}>
+                <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', gap: spacing.md }}>
+                  <View
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: radius.md,
+                      backgroundColor: '#ECEFF3',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Ionicons name="newspaper" size={21} color={colors.textSecondary} />
                   </View>
-                ) : null}
-              </Card>
-            </>
-          ) : null}
-
-          {/* Around campus: shuttle + next event combined */}
-          {shuttle || nextEvent ? (
-            <>
-              <SectionHeader title={t('home.aroundCampus')} />
-              <Card padded={false}>
-                {shuttle ? (
-                  <Pressable onPress={() => router.push('/section/shuttle')} style={({ pressed }) => [row(false), pressed && { backgroundColor: colors.surfaceAlt }]}>
-                    <View style={tile}>
-                      <Ionicons name="bus" size={20} color={colors.textSecondary} />
-                    </View>
-                    <View style={{ flex: 1 }}>
-                      <Text weight="semibold" numberOfLines={1}>
-                        {t('home.nextShuttle')}
-                      </Text>
-                      <Text variant="label" muted numberOfLines={1}>
-                        {pick(shuttle.fromEn, shuttle.fromAr)} → {pick(shuttle.toEn, shuttle.toAr)}
-                      </Text>
-                    </View>
-                    <Badge label={nextShuttleTime(shuttle.times)} tone="neutral" />
-                  </Pressable>
-                ) : null}
-                {nextEvent ? (
-                  <Pressable onPress={() => router.push('/section/events')} style={({ pressed }) => [row(!!shuttle), pressed && { backgroundColor: colors.surfaceAlt }]}>
-                    <View style={tile}>
-                      <Ionicons name="sparkles" size={20} color={colors.textSecondary} />
-                    </View>
-                    <View style={{ flex: 1 }}>
-                      <Text weight="semibold" numberOfLines={1}>
-                        {pick(nextEvent.titleEn, nextEvent.titleAr)}
-                      </Text>
-                      <Text variant="label" muted numberOfLines={1}>
-                        {fmtDate(nextEvent.start, lang)} · {fmtTime(nextEvent.start, lang)}
-                      </Text>
-                    </View>
-                    <Ionicons name={chevron} size={16} color={colors.textMuted} />
-                  </Pressable>
-                ) : null}
+                  <View style={{ flex: 1 }}>
+                    <Text weight="bold" numberOfLines={2}>
+                      {pick(featured.titleEn, featured.titleAr)}
+                    </Text>
+                    <Text variant="caption" muted style={{ marginTop: 4 }}>
+                      {fmtDate(featured.date, lang)}
+                    </Text>
+                  </View>
+                </View>
               </Card>
             </>
           ) : null}
         </View>
       </ScrollView>
-    </View>
-  );
-}
-
-function RoleSpotlight({ role }: { role: string }) {
-  const router = useRouter();
-  const { t, lang, pick, isRTL } = useLang();
-
-  let content: { icon: keyof typeof Ionicons.glyphMap; title: string; subtitle: string; route: string } | null = null;
-
-  if (role === 'teacher') {
-    const next = getInvigilations().slice().sort((a, b) => a.date.localeCompare(b.date))[0];
-    if (next) {
-      content = {
-        icon: 'clipboard',
-        title: pick(next.examEn, next.examAr),
-        subtitle: `${fmtDate(next.date, lang)} · ${next.start} · ${t('invigilation.room')} ${next.room}`,
-        route: '/section/invigilation',
-      };
-    }
-  } else if (role === 'advisor') {
-    const all = getAdvisees();
-    const atRisk = all.filter((a) => a.status !== 'good').length;
-    content = {
-      icon: 'compass',
-      title: `${all.length} ${t('notices.advisees')}`,
-      subtitle: `${atRisk} ${t('excuses.statusPending')}`,
-      route: '/section/notices',
-    };
-  } else if (role === 'student_affairs') {
-    const pending = getExcusesQueue().filter((e) => e.status === 'pending').length;
-    content = {
-      icon: 'document-attach',
-      title: t('sections.excuseReview.title'),
-      subtitle: `${pending} · ${t('excuses.statusPending')}`,
-      route: '/section/excuses-review',
-    };
-  } else if (role === 'vendor') {
-    content = {
-      icon: 'restaurant',
-      title: t('food.manageMenu'),
-      subtitle: t('sections.food.subtitle'),
-      route: '/section/food',
-    };
-  }
-
-  if (!content) return null;
-  return (
-    <View style={{ marginTop: spacing.lg }}>
-      <Card onPress={() => router.push(content!.route as never)}>
-        <View style={{ flexDirection: isRTL ? 'row-reverse' : 'row', alignItems: 'center', gap: spacing.md }}>
-          <View style={{ width: 46, height: 46, borderRadius: radius.md, backgroundColor: '#ECEFF3', alignItems: 'center', justifyContent: 'center' }}>
-            <Ionicons name={content.icon} size={22} color={colors.textSecondary} />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text weight="semibold" numberOfLines={1}>
-              {content.title}
-            </Text>
-            <Text variant="label" muted numberOfLines={1}>
-              {content.subtitle}
-            </Text>
-          </View>
-          <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={18} color={colors.textMuted} />
-        </View>
-      </Card>
     </View>
   );
 }

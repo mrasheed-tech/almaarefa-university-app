@@ -259,9 +259,9 @@ export const directory: DirectoryEntry[] = [
   { id: 'd3', nameEn: 'Admissions & Registration', nameAr: 'القبول والتسجيل', titleEn: 'Deanship', titleAr: 'عمادة', department: 'Student Services', email: 'registration@um.edu.sa', phone: '+966112990100', office: 'Admin-1' },
   { id: 'd4', nameEn: 'Deanship of Student Affairs', nameAr: 'عمادة شؤون الطلاب', titleEn: 'Deanship', titleAr: 'عمادة', department: 'Student Affairs', email: 'affairs@um.edu.sa', phone: '+966112990200', office: 'Admin-2' },
   { id: 'd5', nameEn: 'IT Help Desk', nameAr: 'الدعم الفني', titleEn: 'Support', titleAr: 'دعم', department: 'IT Deanship', email: 'ithelp@um.edu.sa', phone: '+966112990911', office: 'IT-G' },
-  { id: 'd6', nameEn: 'Dr. Muhammed Alzahrani', nameAr: 'د. محمد الزهراني', titleEn: 'Assistant Professor', titleAr: 'أستاذ مساعد', department: 'College of Medicine', email: 'm.alzahrani@um.edu.sa', phone: '+966112990010', office: 'MED-220' },
-  { id: 'd7', nameEn: 'Dr. Mona Al-Hudhaif', nameAr: 'د. منى الحذيف', titleEn: 'Associate Professor', titleAr: 'أستاذة مشاركة', department: 'College of Applied Medical Sciences', email: 'm.alhudhaif@um.edu.sa', phone: '+966112990011', office: 'AMS-305' },
-  { id: 'd8', nameEn: 'Dr. Hassan Idrees', nameAr: 'د. حسن إدريس', titleEn: 'Assistant Professor', titleAr: 'أستاذ مساعد', department: 'College of Pharmacy', email: 'h.idrees@um.edu.sa', phone: '+966112990012', office: 'P-410' },
+  { id: 'd6', nameEn: 'Dr. Muhammed Alzahrani', nameAr: 'د. محمد الزهراني', titleEn: 'Dean of Applied Sciences', titleAr: 'عميد العلوم التطبيقية', department: 'College of Applied Sciences', email: 'm.alzahrani@um.edu.sa', phone: '+966112990010', office: 'APS-100' },
+  { id: 'd7', nameEn: 'Dr. Mona Al-Hudhaif', nameAr: 'د. منى الحذيف', titleEn: 'Arabic Instructor', titleAr: 'محاضرة لغة عربية', department: 'Department of Arabic', email: 'm.alhudhaif@um.edu.sa', phone: '+966112990011', office: 'AR-305' },
+  { id: 'd8', nameEn: 'Dr. Hassan Idrees', nameAr: 'د. حسن إدريس', titleEn: 'Biostatistics Instructor', titleAr: 'محاضر إحصاء حيوي', department: 'Department of Biostatistics', email: 'h.idrees@um.edu.sa', phone: '+966112990012', office: 'BIO-410' },
 ];
 
 /* --------------------------- emergency contacts -------------------------- */

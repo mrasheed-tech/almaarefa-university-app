@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import { I18nManager, DevSettings, Platform } from 'react-native';
 import * as Localization from 'expo-localization';
 import * as SecureStore from 'expo-secure-store';
+import * as Updates from 'expo-updates';
 import en from '@/locales/en.json';
 import ar from '@/locales/ar.json';
 
@@ -44,6 +45,29 @@ export function directionFor(lang: string): 'rtl' | 'ltr' {
   return lang === 'ar' ? 'rtl' : 'ltr';
 }
 
+/**
+ * Reload the JS bundle so native RTL/LTR mirroring takes effect.
+ * Production builds must use expo-updates' reloadAsync — DevSettings.reload
+ * is a development-only API and crashes the app in a release build (the cause
+ * of the "app closes when switching language" bug). DevSettings is used only
+ * under __DEV__ where expo-updates reload is unavailable.
+ */
+async function reloadApp() {
+  if (__DEV__) {
+    try {
+      DevSettings.reload();
+    } catch {
+      // no-op
+    }
+    return;
+  }
+  try {
+    await Updates.reloadAsync();
+  } catch {
+    // no-op in environments without expo-updates — applies on next launch
+  }
+}
+
 function applyDirection(lang: Lang, reload: boolean) {
   const shouldRTL = lang === 'ar';
   if (I18nManager.isRTL !== shouldRTL) {
@@ -52,11 +76,7 @@ function applyDirection(lang: Lang, reload: boolean) {
     // Native layout mirroring only fully applies after a reload. On web,
     // react-native-web flips direction live, so no reload is needed.
     if (reload && Platform.OS !== 'web') {
-      try {
-        DevSettings.reload();
-      } catch {
-        // no-op in production builds — applies on next launch
-      }
+      reloadApp();
     }
   }
 }

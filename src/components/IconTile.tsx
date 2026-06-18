@@ -1,4 +1,4 @@
-import { Pressable, View } from 'react-native';
+import { Pressable, View, type DimensionValue } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Text } from './Text';
 import { colors, radius } from '@/theme';
@@ -9,13 +9,13 @@ interface Props {
   color?: string;
   bg?: string;
   count?: number;
-  width?: number;
+  width?: DimensionValue;
   onPress?: () => void;
 }
 
 export function IconTile({ icon, label, color = colors.primary, bg = colors.primaryTint, count, width = 76, onPress }: Props) {
   return (
-    <Pressable onPress={onPress} style={{ alignItems: 'center', width, gap: 6 }}>
+    <Pressable onPress={onPress} style={{ alignItems: 'center', width, gap: 6, marginBottom: 4 }}>
       <View
         style={{
           width: 58,

@@ -21,11 +21,11 @@ const SECTIONS_EN = [
   },
   {
     heading: '4. Data Sharing',
-    body: 'We do not sell or share your personal data with third parties for commercial purposes. Data may be shared with Almaarefa University's internal systems and authorised service providers (such as cloud hosting and authentication services) solely to operate this application.',
+    body: 'We do not sell or share your personal data with third parties for commercial purposes. Data may be shared with Almaarefa University’s internal systems and authorised service providers (such as cloud hosting and authentication services) solely to operate this application.',
   },
   {
     heading: '5. Data Retention',
-    body: 'Personal data is retained for as long as you hold an active account with Almaarefa University. Upon deactivation of your account, data is retained in accordance with the university's records-management policy and applicable Saudi regulations.',
+    body: 'Personal data is retained for as long as you hold an active account with Almaarefa University. Upon deactivation of your account, data is retained in accordance with the university’s records-management policy and applicable Saudi regulations.',
   },
   {
     heading: '6. Security',
@@ -33,10 +33,10 @@ const SECTIONS_EN = [
   },
   {
     heading: '7. Your Rights (PDPL)',
-    body: 'Under Saudi Arabia's Personal Data Protection Law (PDPL), you have the right to access, correct, and request deletion of your personal data. To exercise these rights, contact the IT Deanship at ithelp@um.edu.sa.',
+    body: 'Under Saudi Arabia’s Personal Data Protection Law (PDPL), you have the right to access, correct, and request deletion of your personal data. To exercise these rights, contact the IT Deanship at ithelp@um.edu.sa.',
   },
   {
-    heading: '8. Children's Privacy',
+    heading: '8. Children’s Privacy',
     body: 'This application is intended for enrolled university students (18 years and older) and university staff. We do not knowingly collect data from minors.',
   },
   {
@@ -93,8 +93,8 @@ const SECTIONS_AR = [
 ];
 
 export default function Privacy() {
-  const { t, pick, isRTL } = useLang();
-  const sections = pick(SECTIONS_EN, SECTIONS_AR);
+  const { t, lang, pick, isRTL } = useLang();
+  const sections = lang === 'ar' ? SECTIONS_AR : SECTIONS_EN;
   const lastUpdated = pick(LAST_UPDATED_EN, LAST_UPDATED_AR);
 
   return (

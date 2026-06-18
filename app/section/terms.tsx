@@ -93,8 +93,8 @@ const SECTIONS_AR = [
 ];
 
 export default function Terms() {
-  const { t, pick, isRTL } = useLang();
-  const sections = pick(SECTIONS_EN, SECTIONS_AR);
+  const { t, lang, pick, isRTL } = useLang();
+  const sections = lang === 'ar' ? SECTIONS_AR : SECTIONS_EN;
   const lastUpdated = pick(LAST_UPDATED_EN, LAST_UPDATED_AR);
 
   return (

@@ -51,7 +51,7 @@
     "calendar": "التقويم",
     "mail": "البريد",
     "services": "الخدمات",
-    "more": "المزيد"
+    "more": "الملف الشخصي"
   },
   "home": {
     "greetingMorning": "صباح الخير",
@@ -71,7 +71,27 @@
     "openPortal": "البوابة",
     "openMoodle": "مودل",
     "digitalId": "بطاقتي",
-    "more": "خدمات أخرى"
+    "more": "خدمات أخرى",
+    "shortcuts": "اختصارات",
+    "grid": {
+      "calendar": "التقويم",
+      "reminders": "التذكيرات",
+      "mail": "البريد",
+      "grades": "الدرجات",
+      "events": "الفعاليات",
+      "id": "الهوية",
+      "moodle": "مودل",
+      "shuttle": "النقل",
+      "food": "المطاعم",
+      "news": "الأخبار",
+      "directory": "الدليل",
+      "prayer": "الصلاة",
+      "services": "الخدمات",
+      "invigilation": "المراقبة",
+      "advisees": "المرشدون",
+      "excuses": "الأعذار",
+      "orders": "الطلبات"
+    }
   },
   "services": {
     "academic": "الأكاديمية",

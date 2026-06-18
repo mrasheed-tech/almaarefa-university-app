@@ -19,7 +19,7 @@
         "CFBundleAllowMixedLocalizations": true,
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "17"
+      "buildNumber": "20"
     },
     "android": {
       "package": "sa.edu.um.app",

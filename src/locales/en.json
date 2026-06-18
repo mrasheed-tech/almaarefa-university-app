@@ -71,7 +71,27 @@
     "openPortal": "Portal",
     "openMoodle": "Moodle",
     "digitalId": "My ID",
-    "more": "More services"
+    "more": "More services",
+    "shortcuts": "Shortcuts",
+    "grid": {
+      "calendar": "Calendar",
+      "reminders": "Reminders",
+      "mail": "Mail",
+      "grades": "Grades",
+      "events": "Events",
+      "id": "My ID",
+      "moodle": "Moodle",
+      "shuttle": "Shuttle",
+      "food": "Dining",
+      "news": "News",
+      "directory": "Directory",
+      "prayer": "Prayer",
+      "services": "Services",
+      "invigilation": "Invigilation",
+      "advisees": "Advisees",
+      "excuses": "Excuses",
+      "orders": "Orders"
+    }
   },
   "services": {
     "academic": "Academic",
