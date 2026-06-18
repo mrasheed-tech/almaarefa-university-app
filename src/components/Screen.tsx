@@ -1,5 +1,13 @@
 import { ReactNode } from 'react';
-import { ScrollView, View, ViewStyle, StyleProp, RefreshControlProps } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+  ViewStyle,
+  StyleProp,
+  RefreshControlProps,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, spacing } from '@/theme';
 
@@ -34,6 +42,11 @@ export function Screen({
           ]}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="interactive"
+          // iOS: automatically inset the scroll view by the keyboard height and
+          // scroll the focused TextInput into view, so fields are never hidden
+          // behind the keyboard.
+          automaticallyAdjustKeyboardInsets={Platform.OS === 'ios'}
           refreshControl={refreshControl}
         >
           {children}
@@ -42,9 +55,12 @@ export function Screen({
     );
   }
 
+  // Non-scrolling screens: lift content above the keyboard when a field is focused.
   return (
-    <View style={[container, { padding: pad, paddingBottom: pad + insets.bottom }, contentStyle]}>
-      {children}
-    </View>
+    <KeyboardAvoidingView style={container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <View style={[{ flex: 1, padding: pad, paddingBottom: pad + insets.bottom }, contentStyle]}>
+        {children}
+      </View>
+    </KeyboardAvoidingView>
   );
 }
